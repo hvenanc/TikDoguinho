@@ -34,5 +34,15 @@ public class TutorController {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tutor Cadastrado com Sucesso!"));
        
     }
+
+    public Tutor getTutorCadastro() {
+        return tutorCadastro;
+    }
+
+    public void setTutorCadastro(Tutor tutorCadastro) {
+        this.tutorCadastro = tutorCadastro;
+    }
+    
+    
     
 }

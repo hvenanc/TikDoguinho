@@ -5,16 +5,18 @@
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>TikDoguinho</title>
-        <meta name="author" content="The Author"></meta>
+        <meta name="TikDoguinho" content="Henrique"></meta>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        
+        <b:growl delay="5000"/>
+        
         <b:navBar brand="Tik Doguinho" brandHref="#" inverse="true" fixed="top">
            
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
                     <b:inputText placeholder="Login" fieldSize="sm"/>
-                    <!--input type="text" class="form-control" placeholder="Search"/-->
                 </div>
                 <div class="form-group">
                     <b:inputText placeholder="Senha" fieldSize="sm"/>
@@ -28,9 +30,27 @@
                 <h1>Bem-Vindo!</h1>
                 <p>Conheça o Tik Doguinho, a primeira rede social voltada para pets e seus donos! 🐾🐶🐱
                 </p>
-                <p>
-                    <a href="#" class="btn btn-lg btn-info">Criar Conta »</a>
-                </p>
+                
+                
+                <b:form id="formCadTutor">
+            
+                    <b:modal  id="modalCadTutor" class="modalCadastroTutor" title="Cadastro de Novo Usuário">
+                        
+                        <b:inputText label="E-mail:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.email}"/>
+                        <b:inputText label="Login:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.login}"/>
+                        <b:inputSecret label="Senha:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.senha}"/>
+                        
+                         <b:commandButton value="Cadastrar Usuário"
+                                          action="#{tutorController.inserir()}"
+                                                  look="success"/>
+                            
+                       
+                    </b:modal>
+                    
+                     <b:commandButton action="a" value="Criar Conta" style-class="btn btn-lg btn-info" 
+                                      icon="chevron-right" iconAlign="right" oncomplete="$('.modalCadastroTutor').modal('show')" ajax="true"/>
+            
+                </b:form>
             </b:container>
 
         </b:jumbotron>
@@ -61,6 +81,6 @@
             <p>© DevCaotics 2023</p>
             </footer>
         </b:container>
-
+        
     </h:body>
 </html>

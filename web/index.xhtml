@@ -16,13 +16,14 @@
            
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
-                    <b:inputText placeholder="Login" fieldSize="sm"/>
+                    <b:inputText placeholder="Login" fieldSize="sm" value="#{login}"/>
                 </div>
                 <div class="form-group">
-                    <b:inputText placeholder="Senha" fieldSize="sm"/>
+                    <b:inputSecret placeholder="Senha" fieldSize="sm" value="#{senha}"/>
                 </div> 
                 #{' '}
-                <b:commandButton action="a" value="Entrar" look="success" icon="chevron-right" iconAlign="right"/>
+                <b:commandButton value="Entrar" look="success" icon="chevron-right" 
+                                 iconAlign="right" action="#{loginController.logar(login, senha)}"/>
             </h:form>
         </b:navBar>
         <b:jumbotron>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Menu Tutor</title>
+    </h:head>
+    <h:body>
+        
+        <b:growl delay="2000"/>
+        
+        <ui:include src="home.xhtml" rendered="true"/>
+        
+        <c:if test="#{loginController.tutorLogado eq null}" >
+            <script>
+                    location.href = 'index.xhtml'
+            </script>
+        </c:if>
+        
+        <b:form>
+            <b:panelGrid columns="2" colSpans="2,10">
+                
+                
+                <b:panel>
+                    <b:commandButton value="Editar Dados" style-class="btn-primary" 
+                                     ajax="true" oncomplete="$('.atualizarTutor').show('modal')">
+                        <f:setPropertyActionListener value="#{loginController.tutorLogado}"
+                                                     target="#{tutorController.selection}"/>
+                    </b:commandButton>
+                    <b:commandButton value="Alterar Senha" style-class="btn-primary">
+                        
+                    </b:commandButton>
+                </b:panel>
+                
+                <b:panel>
+                
+                    <h:outputText value="Bem-Vindo,  " style="font-size: 25pt"/>
+                    <h:outputText value="#{loginController.tutorLogado.login}" style="font-size: 25pt; font-style: normal"/>
+                    <br></br>
+                    <h:outputText value="Login: "/>
+                    <h:outputText value="#{loginController.tutorLogado.login}"/>
+                    <br></br>
+                    <h:outputText value="E-mail: "/>
+                    <h:outputText value="#{loginController.tutorLogado.email}"/>
+                </b:panel>
+             </b:panelGrid>
+        </b:form>
+        
+        <b:form id="atualizarTutor">
+            
+            <b:modal id="modalAtualizarTutor" class="atualizarTutor" title="Atualizar Dados" closable="true">
+                <b:panelGrid columns="2">
+                    <b:inputText label="Login:" labelStyle="width:80px;" value="#{loginController.tutorLogado.login}"/>
+                    <b:inputText label="E-mail:" labelStyle="width:80px;" value="#{loginController.tutorLogado.email}"/>
+                </b:panelGrid>
+                
+                  <b:commandButton value="Atualizar Dados"
+                                          action="#{tutorController.alterar()}"
+                                                  look="success"/>
+                    <b:commandButton value="Fechar" oncomplete="{$('#modalAtualizarTutor').modal('close')}"
+                                     look="danger"></b:commandButton>
+            </b:modal>
+            
+        </b:form>
+    </h:body>
+</html>
+

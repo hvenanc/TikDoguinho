@@ -21,6 +21,7 @@ import org.henrique.model.negocios.Tutor;
 public class TutorController {
     
     private Tutor tutorCadastro;
+    private Tutor selection;
     
     @PostConstruct
     public void init() {
@@ -34,6 +35,11 @@ public class TutorController {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tutor Cadastrado com Sucesso!"));
        
     }
+    
+    public void alterar() {
+        ManagerDao.getCurrentInstance().update(this.selection);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados atualizados com sucesso"));
+    }
 
     public Tutor getTutorCadastro() {
         return tutorCadastro;
@@ -42,6 +48,16 @@ public class TutorController {
     public void setTutorCadastro(Tutor tutorCadastro) {
         this.tutorCadastro = tutorCadastro;
     }
+
+    public Tutor getSelection() {
+        return selection;
+    }
+
+    public void setSelection(Tutor selection) {
+        this.selection = selection;
+    }
+    
+    
     
     
     

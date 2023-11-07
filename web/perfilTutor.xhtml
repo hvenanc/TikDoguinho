@@ -11,8 +11,6 @@
     </h:head>
     <h:body>
         
-        <b:growl delay="2000"/>
-        
         <ui:include src="home.xhtml" rendered="true"/>
         
         <c:if test="#{loginController.tutorLogado eq null}" >
@@ -31,7 +29,8 @@
                         <f:setPropertyActionListener value="#{loginController.tutorLogado}"
                                                      target="#{tutorController.selection}"/>
                     </b:commandButton>
-                    <b:commandButton value="Alterar Senha" style-class="btn-primary">
+                    <b:commandButton value="Alterar Senha" style-class="btn-primary"
+                                     ajax="true" oncomplete="$('.modalMudarSenha').show('modal')">
                         
                     </b:commandButton>
                 </b:panel>
@@ -61,7 +60,26 @@
                   <b:commandButton value="Atualizar Dados"
                                           action="#{tutorController.alterar()}"
                                                   look="success"/>
-                    <b:commandButton value="Fechar" oncomplete="{$('#modalAtualizarTutor').modal('close')}"
+                    <b:commandButton value="Fechar" oncomplete="$('#modalAtualizarTutor').modal('close')"
+                                     look="danger"></b:commandButton>
+            </b:modal>
+            
+        </b:form>
+        
+        
+        <b:form id="mudarSenha">
+            
+            <b:modal id="modalMudarSenha" class="modalMudarSenha" title="Alterar Senha">
+                <b:panelGrid columns="3">
+                    <b:inputSecret label="Senha Anterior: " labelStyle="width:80px" value="#{senha}"/>
+                    <b:inputSecret label="Nova Senha:  " labelStyle="width:80px" value="#{novaSenha}"/>
+                    <b:inputSecret label="Confirme a Nova Senha: " labelStyle="width:90px" value="#{confirmaSenha}"/>
+                </b:panelGrid>
+                
+                <b:commandButton value="Salvar Nova Senha"
+                                 action="#{tutorController.alterarSenha(senha,novaSenha,confirmaSenha)}"
+                                                  look="success"/>
+                    <b:commandButton value="Fechar" oncomplete="$('#modalMudarSenha').modal('close')"
                                      look="danger"></b:commandButton>
             </b:modal>
             

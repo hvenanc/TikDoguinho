@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
         
-        <b:growl delay="5000"/>
+        <b:growl delay="2000"/>
         
         <c:if test="#{loginController.tutorLogado eq null}" >
             <script>
@@ -17,7 +17,7 @@
             </script>
         </c:if>
         
-        <b:navBar brand="TikDoguinho" brandHref="#" fluid="true">
+        <b:navBar brand="TikDoguinho" brandHref="home.xhtml" fluid="true">
             <b:navbarLinks>
                 <b:dropMenu value=" Meus Pets  " icon="bi bi-person-hearts">
                     <b:navLink value="Adicionar Pets" href="#"></b:navLink>

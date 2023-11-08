@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Meus Pets</title>
+    </h:head>
+    <h:body>
+        <b:growl delay="2000"/>
+        
+        <ui:include src="home.xhtml" rendered="true"/>
+        
+        <c:if test="#{loginController.tutorLogado eq null}" >
+            <script>
+                    location.href = 'index.xhtml'
+            </script>
+        </c:if>
+        
+        
+        <b:form id="formPets">
+            <b:dataTable  id="tablePets" value="#{tutorController.lerPets()}" var="pets" pdf="true">
+                <b:dataTableColumn value="#{pets.hashPet}" label="TikDogCode"/>
+                <b:dataTableColumn value="#{pets.nome}" label="Nome do Pet"/>
+                <b:dataTableColumn value="#{pets.mesAnoNascimento}" label="Mês e Ano de Nascimento"/>
+                <b:dataTableColumn value="#{pets.porte}" label="Porte"/>
+                <b:dataTableColumn label="Opções">
+                    <b:commandButton icon="search"></b:commandButton>
+                    <b:commandButton icon="pencil"></b:commandButton>
+                    <b:commandButton icon="trash"></b:commandButton>
+                </b:dataTableColumn>
+            </b:dataTable>
+        </b:form>
+    </h:body>
+</html>
+

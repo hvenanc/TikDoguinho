@@ -114,6 +114,24 @@ public class TutorController {
             
         }
     }
+    
+    public List<Tutor> lerTutores() {
+        
+        List<Tutor> tutores = null;
+        
+        tutores = ManagerDao.getCurrentInstance().read("select t from Tutor t", Tutor.class);
+        return tutores;
+    }
+    
+    public List<Pet> lerPets() {
+        
+        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true))
+                .getAttribute("loginController")).getTutorLogado();
+        
+        return tutorLogado.getPets();
+        
+    }
 
     public Tutor getTutorCadastro() {
         return tutorCadastro;

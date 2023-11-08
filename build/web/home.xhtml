@@ -27,9 +27,9 @@
                             
                             <b:navLink value="Compartilhar Pets"
                                              oncomplete="$('.modalCompartilhar').modal()" ajax="true"/>
+                            <b:navLink value="Gerenciar Pets" href="gerenciarPets.xhtml"></b:navLink>
                             </div>
                         </b:form>
-                    <b:navLink value="Gerenciar Pets" href="#"></b:navLink>
                 </b:dropMenu>
             </b:navbarLinks>
             <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
@@ -66,7 +66,7 @@
         
         <b:form id="compartilharPet" class="compartilharPet">
             <b:modal id="modalCompartilhar" class="modalCompartilhar" title="Compartilhar Pet">
-                <p>Você poder cadastrar um Pet a partir do código do Pet do seu parceiro! 🐾🐶🐱</p>
+                <p>Você poder cadastrar um Pet a partir do TikDogCode do Pet de alguém! 🐾🐶🐱</p>
                 <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
                 <b:commandButton value="Salvar Pet" action="#{tutorController.compartilharPet(codigoPet)}" look="success"/>
             </b:modal>

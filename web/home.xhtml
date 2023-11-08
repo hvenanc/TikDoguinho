@@ -20,8 +20,15 @@
         <b:navBar brand="TikDoguinho" brandHref="home.xhtml" fluid="true">
             <b:navbarLinks>
                 <b:dropMenu value=" Meus Pets  " icon="bi bi-person-hearts">
-                    <b:navLink value="Adicionar Pets" href="#"></b:navLink>
-                    <b:navLink value="Compartilhar Pets" href="#"></b:navLink>
+                        <b:form id="abrirCadTutor">
+                            <div align="center" draggable="false" >
+                            <b:navLink value="Adicionar Pets"
+                                             oncomplete="$('.modalCadPet').modal()" ajax="true"/>
+                            
+                            <b:navLink value="Compartilhar Pets"
+                                             oncomplete="$('.modalCompartilhar').modal()" ajax="true"/>
+                            </div>
+                        </b:form>
                     <b:navLink value="Gerenciar Pets" href="#"></b:navLink>
                 </b:dropMenu>
             </b:navbarLinks>
@@ -46,6 +53,25 @@
                 </b:dropMenu>
             </b:navbarLinks>
         </b:navBar>
+        
+        <b:form id="cadPet" class="cadPet">
+            <b:modal id="modalCadPet" class="modalCadPet" title="Cadastre Aqui Seu Pet">
+                <b:inputText label="Nome do Pet: " labelStyle="width:100px" value="#{nome}"/>
+                <b:inputText label="Porte do Pet:" labelStyle="width:100px" value="#{porte}"/>
+                <b:inputText label="Nascimento:" labelStyle="width:100px" value="#{nascimento}"/>
+                
+                <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}" look="success"/>
+            </b:modal>
+        </b:form>
+        
+        <b:form id="compartilharPet" class="compartilharPet">
+            <b:modal id="modalCompartilhar" class="modalCompartilhar" title="Compartilhar Pet">
+                <p>Você poder cadastrar um Pet a partir do código do Pet do seu parceiro! 🐾🐶🐱</p>
+                <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
+                <b:commandButton value="Salvar Pet" action="#{tutorController.compartilharPet(codigoPet)}" look="success"/>
+            </b:modal>
+        </b:form>
+        
     </h:body>
 </html>
 

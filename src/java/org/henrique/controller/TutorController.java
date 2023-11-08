@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package org.henrique.controller;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
+import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Tutor;
 
 /**
@@ -63,6 +66,53 @@ public class TutorController {
         ManagerDao.getCurrentInstance().update(tutorLogado);
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Senha Alterada com Sucesso!"));
         
+    }
+    
+    
+    public void cadastrarPet(String nome, String porte, String nascimento) {
+        
+        Pet pet = new Pet();
+        List<Pet> pets = new ArrayList<>();
+        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true))
+                .getAttribute("loginController")).getTutorLogado();
+        
+        pet.setNome(nome);
+        pet.setPorte(porte);
+        pet.setMesAnoNascimento(nascimento);
+        pet.setHashPet(pet.hashPets());
+        pets.add(pet);
+        tutorLogado.setPets(pets);
+        
+        
+        ManagerDao.getCurrentInstance().update(tutorLogado);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pet Cadastrado com Sucesso!"));
+        
+        
+    }
+    
+    public void compartilharPet(String codigoPet) {
+       
+        try {
+        Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" + codigoPet + "'", Pet.class).get(0);
+        System.out.println(pet.getNome());
+        
+        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true))
+                .getAttribute("loginController")).getTutorLogado();
+        
+         List<Pet> pets = tutorLogado.getPets();
+         pets.add(pet);
+         tutorLogado.setPets(pets);
+         
+         ManagerDao.getCurrentInstance().update(tutorLogado);
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Que massa! Agora você tem um Pet Compartilhado"));
+        }
+        catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Código de Pet Inesixtente ou Pet já compartilhado",""));
+            return;
+            
+        }
     }
 
     public Tutor getTutorCadastro() {

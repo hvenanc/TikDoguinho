@@ -83,7 +83,7 @@ public class ManagerDao {
         
         Tutor tutor = new Tutor();
          tutor.setEmail("Henrique@teste.com");
-         tutor.setLogin("rick");
+         tutor.setLogin("Henrique");
          tutor.setSenha("123");
          
         Pet p = new Pet();

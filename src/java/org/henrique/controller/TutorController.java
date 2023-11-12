@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
@@ -21,7 +22,7 @@ import org.henrique.model.negocios.Tutor;
  * @author henrique
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class TutorController {
     
     private Tutor tutorCadastro;
@@ -69,10 +70,9 @@ public class TutorController {
     }
     
     
-    public void cadastrarPet(String nome, String porte, String nascimento) {
+    public String cadastrarPet(String nome, String porte, String nascimento) {
         
         Pet pet = new Pet();
-        List<Pet> pets = new ArrayList<>();
         Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
@@ -81,12 +81,15 @@ public class TutorController {
         pet.setPorte(porte);
         pet.setMesAnoNascimento(nascimento);
         pet.setHashPet(pet.hashPets());
-        pets.add(pet);
-        tutorLogado.setPets(pets);
+        List<Pet> petsTutor = tutorLogado.getPets();
+        petsTutor.add(pet);
+        tutorLogado.setPets(petsTutor);
         
         
         ManagerDao.getCurrentInstance().update(tutorLogado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pet Cadastrado com Sucesso!"));
+        
+        return "gerenciarPets";
         
         
     }
@@ -95,7 +98,6 @@ public class TutorController {
        
         try {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" + codigoPet + "'", Pet.class).get(0);
-        System.out.println(pet.getNome());
         
         Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(true))
@@ -105,7 +107,13 @@ public class TutorController {
          pets.add(pet);
          tutorLogado.setPets(pets);
          
+         List<Tutor> tutoresPet = pet.getTutores();
+         tutoresPet.add(tutorLogado);
+         pet.setTutores(tutoresPet);
+         
+         
          ManagerDao.getCurrentInstance().update(tutorLogado);
+         ManagerDao.getCurrentInstance().update(pet);
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Que massa! Agora você tem um Pet Compartilhado"));
         }
         catch(Exception e) {

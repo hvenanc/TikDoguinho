@@ -6,9 +6,12 @@
 package org.henrique.model.negocios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +33,7 @@ public class Pet implements Serializable {
     private String mesAnoNascimento;
     private String porte;
     private String hashPet;
-    @ManyToMany(mappedBy = "pets")
+    @ManyToMany(mappedBy = "pets", fetch = FetchType.EAGER)
     private List<Tutor> tutores;
 
     public int getCodigo() {
@@ -97,6 +100,31 @@ public class Pet implements Serializable {
             hash.append(caracteres[posicao]);
         }
         return hash.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.codigo;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pet other = (Pet) obj;
+        if (this.codigo != other.codigo) {
+            return false;
+        }
+        return true;
     }
     
     

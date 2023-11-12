@@ -4,12 +4,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Meus Pets</title>
     </h:head>
     <h:body>
-        <b:growl delay="2000"/>
         
         <ui:include src="home.xhtml" rendered="true"/>
         
@@ -21,17 +21,48 @@
         
         
         <b:form id="formPets">
-            <b:dataTable  id="tablePets" value="#{tutorController.lerPets()}" var="pets" pdf="true">
+            <b:dataTable  id="tablePets" value="#{petController.lerPets()}" var="pets" pdf="true">
                 <b:dataTableColumn value="#{pets.hashPet}" label="TikDogCode"/>
                 <b:dataTableColumn value="#{pets.nome}" label="Nome do Pet"/>
                 <b:dataTableColumn value="#{pets.mesAnoNascimento}" label="Mês e Ano de Nascimento"/>
                 <b:dataTableColumn value="#{pets.porte}" label="Porte"/>
                 <b:dataTableColumn label="Opções">
-                    <b:commandButton icon="search"></b:commandButton>
+                    <b:commandButton icon="search" ajax="true" 
+                                     oncomplete="$('.detalharPets').modal('show')"
+                                     update=":formPets:mostarPets"
+                                     >
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    </b:commandButton>
                     <b:commandButton icon="pencil"></b:commandButton>
-                    <b:commandButton icon="trash"></b:commandButton>
+                    <b:commandButton icon="trash" oncomplete="$('.modalDeletarPet').modal('show')" update=":formPets:deletarPet" >
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    </b:commandButton>
                 </b:dataTableColumn>
             </b:dataTable>
+            
+            <b:modal id="mostarPets" class="detalharPets" title="Perfil do #{petController.selection.nome}">
+                
+                <b:panelGrid columns="2">
+                    
+                    <h:outputText value="Meu TikDogCode"/>
+                    <h:outputText value="#{petController.selection.hashPet}"/>
+                    
+                    <h:outputText value="Meu Nascimento"/>
+                    <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
+                                  
+                    <h:outputText value="Meu Porte"/>
+                    <h:outputText value="#{petController.selection.porte}"/>
+                    
+                </b:panelGrid>
+            </b:modal>
+        </b:form>
+        
+        <b:form id="deletarPet" class="deletarPet">
+            <b:modal id="modalDeletarPet" class="modalDeletarPet" title="Deletar Pet 🐶😢">
+                <p>Para deletar seu estimado Pet você deve digitar o seu TikDogCode 🐾🐶🐱</p>
+                <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
+                <b:commandButton value="Deletar Pet" action="#{petController.deletarPet(codigoPet)}" look="success"/>
+            </b:modal>
         </b:form>
     </h:body>
 </html>

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Tutor implements Serializable {
     private String login;
     private String email;
     private String senha;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "tutor_pets",
             joinColumns = @JoinColumn(name = "tutor_id"),
             inverseJoinColumns = @JoinColumn(name = "pets_id"))
@@ -76,6 +77,32 @@ public class Tutor implements Serializable {
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + this.codigo;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tutor other = (Tutor) obj;
+        if (this.codigo != other.codigo) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
     

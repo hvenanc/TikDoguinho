@@ -5,8 +5,8 @@
  */
 package org.henrique.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -104,14 +104,6 @@ public class PetController {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Por Segunça informe corretamente o TikDogCode do Pet!", ""));
         }
         
-    }
-    
-    public List<String> lerTutores() {
-        
-        List<String> nomesTutores = this.selection.getTutores().stream()
-                .map(Tutor::getLogin).collect(Collectors.toList());
-        
-        return nomesTutores;
     }
     
 }

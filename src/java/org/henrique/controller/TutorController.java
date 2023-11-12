@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 package org.henrique.controller;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
@@ -22,7 +20,7 @@ import org.henrique.model.negocios.Tutor;
  * @author henrique
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class TutorController {
     
     private Tutor tutorCadastro;

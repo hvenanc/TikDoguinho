@@ -44,7 +44,7 @@
                 </b:dataTableColumn>
             </b:dataTable>
             
-            <b:modal id="mostarPets" class="detalharPets" title="Perfil do #{petController.selection.nome}">
+            <b:modal id="mostarPets" class="detalharPets" title="Perfil do #{petController.selection.nome} 🐾🐶🐱">
                 
                 <b:panelGrid columns="2">
                     
@@ -56,9 +56,6 @@
                                   
                     <h:outputText value="Meu Porte"/>
                     <h:outputText value="#{petController.selection.porte}"/>
-                    
-                    <h:outputText value="Tutores"/>
-                    <h:outputText value="#{petController.lerTutores()}"/>
                     
                 </b:panelGrid>
             </b:modal>
@@ -80,12 +77,12 @@
                     <b:inputText label="Nome:" labelStyle="width:8s0px" 
                                  value="#{petController.selection.nome}"/>
                     
-                    <b:inputText label="Nascimento:" labelStyle="width:8s0px" 
-                                 value="#{petController.selection.mesAnoNascimento}"/>
-                    
-                    <b:inputText label="Porte:" labelStyle="width:8s0px" 
+                     <b:inputText label="Porte:" labelStyle="width:8s0px" 
                                  value="#{petController.selection.porte}"/>
                     
+                    <b:inputText label="Nascimento:" labelStyle="width:8s0px" 
+                                 value="#{petController.selection.mesAnoNascimento}"/>
+                     
                     <b:commandButton value="Atualizar Pet" action="#{petController.atualizarPet(codigoPet)}" 
                                      look="success"/>
             </b:modal>

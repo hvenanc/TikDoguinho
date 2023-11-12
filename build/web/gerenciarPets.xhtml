@@ -33,7 +33,11 @@
                                      >
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
-                    <b:commandButton icon="pencil"></b:commandButton>
+                    <b:commandButton icon="pencil" ajax="true"
+                                     oncomplete="$('.modalAtualizarPets').modal('show')"
+                                     update=":formPets:atualizarPet">
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    </b:commandButton>
                     <b:commandButton icon="trash" oncomplete="$('.modalDeletarPet').modal('show')" update=":formPets:deletarPet" >
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
@@ -53,6 +57,9 @@
                     <h:outputText value="Meu Porte"/>
                     <h:outputText value="#{petController.selection.porte}"/>
                     
+                    <h:outputText value="Tutores"/>
+                    <h:outputText value="#{petController.lerTutores()}"/>
+                    
                 </b:panelGrid>
             </b:modal>
         </b:form>
@@ -64,6 +71,26 @@
                 <b:commandButton value="Deletar Pet" action="#{petController.deletarPet(codigoPet)}" look="success"/>
             </b:modal>
         </b:form>
+        
+        <b:form id="atualizarPet" class="atualizarPet">
+            <b:modal id="modalAtualizarPets" class="modalAtualizarPets" title="Atualizar Pet 🐾🐶🐱">
+                
+                    <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
+                
+                    <b:inputText label="Nome:" labelStyle="width:8s0px" 
+                                 value="#{petController.selection.nome}"/>
+                    
+                    <b:inputText label="Nascimento:" labelStyle="width:8s0px" 
+                                 value="#{petController.selection.mesAnoNascimento}"/>
+                    
+                    <b:inputText label="Porte:" labelStyle="width:8s0px" 
+                                 value="#{petController.selection.porte}"/>
+                    
+                    <b:commandButton value="Atualizar Pet" action="#{petController.atualizarPet(codigoPet)}" 
+                                     look="success"/>
+            </b:modal>
+        </b:form>
+        
     </h:body>
 </html>
 

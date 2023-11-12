@@ -6,6 +6,7 @@
 package org.henrique.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -82,6 +83,35 @@ public class PetController {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pet não encontrado em nosso Sistema!", ""));
         }
         
+    }
+    
+    public void atualizarPet(String codigoPet) {
+        
+        try {
+        
+        Pet petAtualiza = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
+                + codigoPet + "'", Pet.class).get(0);
+        
+        petAtualiza.setNome(this.selection.getNome());
+        petAtualiza.setMesAnoNascimento(this.selection.getMesAnoNascimento());
+        petAtualiza.setPorte(this.selection.getPorte());
+        ManagerDao.getCurrentInstance().update(petAtualiza);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pet Atualizado com Sucesso!", ""));
+        }
+        
+        catch(ArrayIndexOutOfBoundsException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Por Segunça informe corretamente o TikDogCode do Pet!", ""));
+        }
+        
+    }
+    
+    public List<String> lerTutores() {
+        
+        List<String> nomesTutores = this.selection.getTutores().stream()
+                .map(Tutor::getLogin).collect(Collectors.toList());
+        
+        return nomesTutores;
     }
     
 }

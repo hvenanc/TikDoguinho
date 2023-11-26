@@ -8,6 +8,7 @@ package org.henrique.model.negocios;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,8 +40,8 @@ public class Tutor implements Serializable {
             joinColumns = @JoinColumn(name = "tutor_id"),
             inverseJoinColumns = @JoinColumn(name = "pets_id"))
     private List<Pet> pets;
-    @Lob
-    private byte[] foto;
+    @Embedded
+    private Arquivo arquivo;
 
     public int getCodigo() {
         return codigo;
@@ -89,14 +90,14 @@ public class Tutor implements Serializable {
         return hash;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public Arquivo getArquivo() {
+        return arquivo;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setArquivo(Arquivo arquivo) {
+        this.arquivo = arquivo;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -20,13 +20,13 @@
             </script>
         </c:if>
         
-        <b:form>
+        <b:form id="menuTutor">
             <b:panelGrid columns="2" colSpans="2,10">
                 
                 
                 <b:panel>
                     <b:commandButton value="Adicionar Foto de Perfil" style-class="btn-primary" ajax="true"
-                                     oncomplete="$('.upFoto').show('modal')">
+                                     oncomplete="$('.upFoto').show('modal')" update=":menuTutor:modalFoto">
                         
                     </b:commandButton>
                     <b:commandButton value="Editar Dados" style-class="btn-primary" 

@@ -32,7 +32,7 @@ public class ServletCarregarImagemPerfiTutor extends HttpServlet {
         
         
         
-        byte[] imagem = tutorLogado.getFoto();
+        byte[] imagem = tutorLogado.getArquivo().getArquivo();
         
         response.setContentType("image/jpeg");
         

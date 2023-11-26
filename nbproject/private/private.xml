@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/controller/ServletCarregarImagemPerfiTutor.java</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/web/gerenciarPets.xhtml</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/model/negocios/Arquivo.java</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/controller/TutorController.java</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/model/dao/ManagerDao.java</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/controller/ServletExibirImagem.java</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/web/perfilTutor.xhtml</file>
+            <file>file:/C:/Users/Henri/Área%20de%20Trabalho/Nova%20pasta/TikDoguinho/src/java/org/henrique/model/negocios/Tutor.java</file>
         </group>
     </open-files>
 </project-private>

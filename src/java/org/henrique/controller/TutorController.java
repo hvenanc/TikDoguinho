@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
+import org.henrique.model.negocios.Arquivo;
 import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Tutor;
 import org.primefaces.event.FileUploadEvent;
@@ -144,13 +145,22 @@ public class TutorController {
     
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         
+        Arquivo dadosArquivo = new Arquivo();
         byte[] imagem = new byte[(int) event.getFile().getSize()];
+        String nome = event.getFile().getFileName();
+        String extensao = event.getFile().getContentType();
+        int tamanho = (int) event.getFile().getSize();
+        
+        dadosArquivo.setArquivo(imagem);
+        dadosArquivo.setExtensao(extensao);
+        dadosArquivo.setTamanhoArquivo(tamanho);
+        dadosArquivo.setNomeArquivo(nome);
         
         event.getFile().getInputstream().read(imagem);
         
         ((HttpSession)FacesContext.getCurrentInstance()
-                 .getExternalContext().getSession(true)).setAttribute("imagem"
-                         ,imagem);
+                 .getExternalContext().getSession(true)).setAttribute("arquivo"
+                         ,dadosArquivo);
          
          FacesContext.getCurrentInstance()
                  .addMessage(null, new FacesMessage("Imagem Carregada"));
@@ -166,13 +176,13 @@ public class TutorController {
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
         
-        byte[] imagem = (byte[]) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
-                 .getSession(true)).getAttribute("imagem"));
-        
-        tutorLogado.setFoto(imagem);
+        Arquivo arq = (Arquivo) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
+                 .getSession(true)).getAttribute("arquivo"));
+       
+        tutorLogado.setArquivo(arq);
         ManagerDao.getCurrentInstance().update(tutorLogado);
         
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("SALVOU"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Foto de Perfil Carregada com Sucesso"));
         
         return "perfilTutor";
         

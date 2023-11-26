@@ -15,7 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +39,8 @@ public class Tutor implements Serializable {
             joinColumns = @JoinColumn(name = "tutor_id"),
             inverseJoinColumns = @JoinColumn(name = "pets_id"))
     private List<Pet> pets;
+    @Lob
+    private byte[] foto;
 
     public int getCodigo() {
         return codigo;
@@ -85,6 +89,14 @@ public class Tutor implements Serializable {
         return hash;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

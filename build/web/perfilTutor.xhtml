@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Menu Tutor</title>
     </h:head>
@@ -24,6 +25,10 @@
                 
                 
                 <b:panel>
+                    <b:commandButton value="Adicionar Foto de Perfil" style-class="btn-primary" ajax="true"
+                                     oncomplete="$('.upFoto').show('modal')">
+                        
+                    </b:commandButton>
                     <b:commandButton value="Editar Dados" style-class="btn-primary" 
                                      ajax="true" oncomplete="$('.atualizarTutor').show('modal')">
                         <f:setPropertyActionListener value="#{loginController.tutorLogado}"
@@ -36,6 +41,11 @@
                 </b:panel>
                 
                 <b:panel>
+                    
+                    <b:panel>
+                        <img src="ServletCarregarImagemPerfiTutor"
+                     width="300px" height="300px"/>
+                    </b:panel>
                 
                     <h:outputText value="Bem-Vindo,  " style="font-size: 25pt"/>
                     <h:outputText value="#{loginController.tutorLogado.login}" style="font-size: 25pt; font-style: normal"/>
@@ -45,6 +55,7 @@
                     <br></br>
                     <h:outputText value="E-mail: "/>
                     <h:outputText value="#{loginController.tutorLogado.email}"/>
+                    
                 </b:panel>
              </b:panelGrid>
         </b:form>
@@ -81,6 +92,18 @@
                                                   look="success"/>
                     <b:commandButton value="Fechar" oncomplete="$('#modalMudarSenha').modal('close')"
                                      look="danger"></b:commandButton>
+            </b:modal>
+            
+        </b:form>
+        
+        <b:form id="addFoto" enctype="multipart/form-data">
+            
+            <b:modal id="modalFoto" class="upFoto" title="Adicionar Foto de Perfil">
+                    <p:fileUpload fileUploadListener="#{tutorController.handleFileUpload}" mode="advanced"
+                                  auto="true" sizeLimit="2000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                <b:commandButton value="Enviar Foto" look="success" action="#{tutorController.fotoPerfilTutor()}"/>
+                    <b:commandButton value="Fechar" oncomplete="$('#modalFoto').modal('close')"
+                                     look="danger" ></b:commandButton>
             </b:modal>
             
         </b:form>

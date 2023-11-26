@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>TikDoguinho</title>
+        <meta name="TikDoguinho" content="Henrique"></meta>
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        
+        <b:growl delay="2000"/>
+        
+        <b:navBar brand="Tik Doguinho" brandHref="#" inverse="true" fixed="top">
+           
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Login" fieldSize="sm" value="#{login}"/>
+                </div>
+                <div class="form-group">
+                    <b:inputSecret placeholder="Senha" fieldSize="sm" value="#{senha}"/>
+                </div> 
+                #{' '}
+                <b:commandButton value="Entrar" look="success" icon="chevron-right" 
+                                 iconAlign="right" action="#{loginController.logar(login, senha)}"/>
+            </h:form>
+        </b:navBar>
+        <b:jumbotron>
+            <b:container>
+                <h1>Bem-Vindo!</h1>
+                <p>Conheça o Tik Doguinho, a primeira rede social voltada para pets e seus donos! 🐾🐶🐱
+                </p>
+                
+                
+                <b:form id="formCadTutor">
+            
+                    <b:modal  id="modalCadTutor" class="modalCadastroTutor" title="Cadastro de Novo Usuário">
+                        
+                        <b:inputText label="E-mail:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.email}"/>
+                        <b:inputText label="Login:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.login}"/>
+                        <b:inputSecret label="Senha:" labelStyle="width:80px;" value="#{tutorController.tutorCadastro.senha}"/>
+                        
+                         <b:commandButton value="Cadastrar Usuário"
+                                          action="#{tutorController.inserir()}"
+                                                  look="success"/>
+                            
+                       
+                    </b:modal>
+                    
+                     <b:commandButton action="a" value="Criar Conta" style-class="btn btn-lg btn-info" 
+                                      icon="chevron-right" iconAlign="right" oncomplete="$('.modalCadastroTutor').modal('show')" ajax="true"/>
+            
+                </b:form>
+            </b:container>
+
+        </b:jumbotron>
+        <b:container>
+            <b:row>
+                <b:column col-md="4">
+                    <h2>Felicidade</h2>
+                    <p>No Tik Doguinho, não há espaço para latidos negativos nem arranhões ruins. Aqui, celebramos a alegria contagiante dos cãezinhos e a elegância dos gatos. 
+                        Cada patinha, bigode e rabinho é uma obra-prima da natureza, e estamos aqui para compartilhar e apreciar todas elas. </p>
+                    <p><b:button outcome="" value="View details »"/></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>Comunidade</h2>
+                    <p>Que cada postagem seja uma injeção de felicidade no seu feed. Mostre o seu bichinho de estimação fazendo algo engraçado, fofo, ou simplesmente sendo ele mesmo. 
+                        Compartilhe dicas de cuidados, histórias incríveis e momentos especiais que vocês compartilham juntos. </p>
+                    <p><b:button outcome="" value="View details »"/></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>Junte-se ao Tik Doguinho</h2>
+                    <p>Lembrando sempre de ser gentil, respeitoso e responsável. 
+                        Sinta-se à vontade para se juntar a esta comunidade de pets e suas pessoas que os amam. 
+                        E não se esqueça de encher o seu dia de alegria com uma dose diária de fofura! 🐾💕 #PetsFelizes #PetsUnidos</p>
+                    <p><b:button outcome="" value="View details »"/></p>
+                </b:column>
+            </b:row>
+            <hr/>
+            <footer>
+            <p>© DevCaotics 2023</p>
+            </footer>
+        </b:container>
+        
+    </h:body>
+</html>

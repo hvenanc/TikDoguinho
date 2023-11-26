@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <p:growl id="gro" life="4000" showSummary="true" 
+                 showDetail="true" sticky="false"/>
+        <h:form id="formUsuarios">
+            <p:dataTable id="tblUsuarios" 
+                         value="#{usuarioController.readUsuarios()}"
+                         var="usuario" paginator="true" rows="5"
+                         selection="#{usuarioController.selection}" 
+                         selectionMode="single"
+                         rowKey="#{usuario.codigo}">
+                
+                <p:column headerText="Código">
+                    #{usuario.codigo}
+                </p:column>
+                <p:column filterBy="#{usuario.login}">
+                    <f:facet name="header">Login</f:facet>
+                    <f:facet name="footer">footer</f:facet>
+                    #{usuario.login}
+                </p:column>
+                <p:column headerText="e-mail">
+                    #{usuario.email}
+                </p:column>
+                <p:column headerText="Telefone">
+                    #{usuario.contato}
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton value="detalhar" 
+                             oncomplete="PF('widDialUsuario').show()"
+                             update=":dialUsuario"/>
+            <p:commandButton value="atualizar" action="atualizaUsuario" ajax="false"/>
+            <p:commandButton value="deletar" action="#{usuarioController.deletar()}"
+                             update=":gro @form">
+                <p:confirm message="Deseja realmente deletar este estimado usuario que faz parte da sua base de dados peciosos na sua vida?"/>
+            </p:commandButton>
+            
+            <p:confirmDialog global="true" >
+                <p:commandButton value="sim" styleClass="ui-confirmdialog-yes"/>
+                <p:commandButton value="no" styleClass="ui-confirmdialog-no"/>
+            </p:confirmDialog>
+            
+        </h:form>
+        
+        <p:dialog id="dialUsuario" visible="false" modal="true"
+                  widgetVar="widDialUsuario">
+            <p:panelGrid columns="2">
+                <h:outputText value="Código:"/>
+                <h:outputText value="#{usuarioController.selection.codigo}"/>
+                
+                <h:outputText value="Login:"/>
+                <h:outputText value="#{usuarioController.selection.login}"/>
+                    
+                <h:outputText value="e-mail:"/>
+                <h:outputText value="#{usuarioController.selection.email}"/>
+            
+                <h:outputText value="Cidade:"/>
+                <h:outputText value="#{usuarioController.selection.cidade}"/>
+                
+                <h:outputText value="Bairro:"/>
+                <h:outputText value="#{usuarioController.selection.bairro}"/>
+            
+                <h:outputText value="Telefone:"/>
+                <h:outputText value="#{usuarioController.selection.contato}"/>
+            
+            </p:panelGrid>
+        </p:dialog>
+    </h:body>
+</html>
+

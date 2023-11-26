@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>TikDoguinho</title>
+    </h:head>
+    <h:body>
+        
+        <b:growl delay="2000"/>
+        
+        <c:if test="#{loginController.tutorLogado eq null}" >
+            <script>
+                    location.href = 'index.xhtml'
+            </script>
+        </c:if>
+        
+        <b:navBar brand="TikDoguinho" brandHref="home.xhtml" fluid="true">
+            <b:navbarLinks>
+                <b:dropMenu value=" Meus Pets  " icon="bi bi-person-hearts">
+                        <b:form id="abrirCadTutor">
+                            <div align="center" draggable="false" >
+                            <b:navLink value="Adicionar Pets"
+                                             oncomplete="$('.modalCadPet').modal()" ajax="true" update=":cadPet"/>
+                            
+                            <b:navLink value="Compartilhar Pets"
+                                       oncomplete="$('.modalCompartilhar').modal()" ajax="true" update=":compartilharPet"/>
+                            <b:navLink value="Gerenciar Pets" href="gerenciarPets.xhtml"></b:navLink>
+                            </div>
+                        </b:form>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar"/>
+                </div>
+                <a href="#" class="btn btn-success">Buscar no Feed</a>
+            </form>
+            <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
+            <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:dropMenu value="Minha Conta">
+                    <b:navLink header="#{loginController.tutorLogado.login}" href="#"></b:navLink>
+                    <b:navLink value="Meus Dados" href="perfilTutor.xhtml"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <h:form id="sairForm">
+                        <div style="text-align: center;">
+                            <b:commandButton value="Sair" action="#{loginController.logout()}" style-class="btn-danger"/>
+                        </div>
+                    </h:form>
+                </b:dropMenu>
+            </b:navbarLinks>
+        </b:navBar>
+        
+        <b:form id="cadPet" class="cadPet">
+            <b:modal id="modalCadPet" class="modalCadPet" title="Cadastre Aqui Seu Pet">
+                <b:inputText label="Nome do Pet: " labelStyle="width:100px" value="#{nome}"/>
+                <b:inputText label="Porte do Pet:" labelStyle="width:100px" value="#{porte}"/>
+                <b:inputText label="Nascimento:" labelStyle="width:100px" value="#{nascimento}"/>
+                
+                <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}" 
+                                 look="success"/>
+            </b:modal>
+        </b:form>
+        
+        <b:form id="compartilharPet" class="compartilharPet">
+            <b:modal id="modalCompartilhar" class="modalCompartilhar" title="Compartilhar Pet">
+                <p>Você poder cadastrar um Pet a partir do TikDogCode do Pet de alguém! 🐾🐶🐱</p>
+                <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
+                <b:commandButton value="Salvar Pet" action="#{tutorController.compartilharPet(codigoPet)}" look="success"/>
+            </b:modal>
+        </b:form>
+        
+    </h:body>
+</html>
+

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.henrique.controller;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
 import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Tutor;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  *
@@ -25,6 +27,7 @@ public class TutorController {
     
     private Tutor tutorCadastro;
     private Tutor selection;
+    private String tagImagem;
     
     @PostConstruct
     public void init() {
@@ -138,6 +141,42 @@ public class TutorController {
         return tutorLogado.getPets();
         
     }
+    
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        
+        byte[] imagem = new byte[(int) event.getFile().getSize()];
+        
+        event.getFile().getInputstream().read(imagem);
+        
+        ((HttpSession)FacesContext.getCurrentInstance()
+                 .getExternalContext().getSession(true)).setAttribute("imagem"
+                         ,imagem);
+         
+         FacesContext.getCurrentInstance()
+                 .addMessage(null, new FacesMessage("Imagem Carregada"));
+        
+        
+        this.tagImagem = "http://localhost:8084/TikDoguinho/ServletExibirImagem";
+ 
+    }
+    
+    public String fotoPerfilTutor() {
+        
+        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true))
+                .getAttribute("loginController")).getTutorLogado();
+        
+        byte[] imagem = (byte[]) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
+                 .getSession(true)).getAttribute("imagem"));
+        
+        tutorLogado.setFoto(imagem);
+        ManagerDao.getCurrentInstance().update(tutorLogado);
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("SALVOU"));
+        
+        return "perfilTutor";
+        
+    }
 
     public Tutor getTutorCadastro() {
         return tutorCadastro;
@@ -153,6 +192,14 @@ public class TutorController {
 
     public void setSelection(Tutor selection) {
         this.selection = selection;
+    }
+
+    public String getTagImagem() {
+        return tagImagem;
+    }
+
+    public void setTagImagem(String tagImagem) {
+        this.tagImagem = tagImagem;
     }
     
     

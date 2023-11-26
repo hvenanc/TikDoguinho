@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <b:growl delay="4000"/>
+        <b:form id="formUsuarios">
+
+            <b:commandButton style-class="btn-primary" value="Cadastrar"
+                             ajax="true" 
+                             action="#{usuarioController.modalType('create')}" 
+                             oncomplete="$('.bCadastro').modal('show')"
+                             update=":formCadUsuario:modalCadastro"/>
+
+            <b:dataTable id="tblUsuarios" 
+                         value="#{usuarioController.readUsuarios()}"
+                         var="usuario" pdf="true">
+
+                <b:dataTableColumn value="#{usuario.codigo}" label="Código"/>
+                <b:dataTableColumn value="#{usuario.login}" label="login"/>
+                <b:dataTableColumn value="#{usuario.email}" label="e-mail"/>
+                <b:dataTableColumn value="#{usuario.contato}" label="Telefone de Contato"/>
+                <b:dataTableColumn label="action">
+                    <b:commandButton icon="search" ajax="true" 
+                                     oncomplete="$('.bDetail').modal('show')"
+                                     update=":formUsuarios:modalDetail">
+                        <f:setPropertyActionListener value="#{usuario}" 
+                                                     target="#{usuarioController.selection}"/>
+                    </b:commandButton>
+                    <b:commandButton icon="pencil" action="#{usuarioController.modalType('edit')}"
+                                     oncomplete="$('.bCadastro').modal('show')"
+                                     update=":formCadUsuario:modalCadastro">
+                        <f:setPropertyActionListener value="#{usuario}" 
+                                                     target="#{usuarioController.selection}"/>
+                    </b:commandButton>
+                </b:dataTableColumn>
+
+            </b:dataTable>
+
+            <b:modal id="modalDetail" class="bDetail">
+
+                <b:panelGrid columns="2">
+
+                    <h:outputText value="Login:"/>
+                    <h:outputText value="#{usuarioController.selection.login}"/>
+
+                    <h:outputText value="e-mail:"/>
+                    <h:outputText value="#{usuarioController.selection.email}"/>
+
+                    <h:outputText value="Bairro:"/>
+                    <h:outputText value="#{usuarioController.selection.bairro}"/>
+
+                    <h:outputText value="Cidade:"/>
+                    <h:outputText value="#{usuarioController.selection.cidade}"/>
+
+                    <h:outputText value="Telefone de Contato:"/>
+                    <h:outputText value="#{usuarioController.selection.contato}"/>
+
+                </b:panelGrid>
+
+            </b:modal>
+
+        </b:form>
+
+        <b:form id="formCadUsuario">
+            <b:modal id="modalCadastro" class='bCadastro' closable="false" title="#{(usuarioController.modalType) eq 'create'?'Cadastro de novo usuário':'edite o usuário'}">
+
+
+                <b:panelGrid columns="2">
+
+                    <h:outputText value="Login:"/>
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:inputText value="#{usuarioController.usuarioCadastro.login}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <b:inputText  value="#{usuarioController.selection.login}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                    <h:outputText value="e-mail:"/>
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:inputText value="#{usuarioController.usuarioCadastro.email}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <b:inputText value="#{usuarioController.selection.email}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <h:outputText value="Bairro:"/>
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:inputText value="#{usuarioController.usuarioCadastro.bairro}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <b:inputText value="#{usuarioController.selection.bairro}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                    <h:outputText value="Cidade:"/>
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:inputText value="#{usuarioController.usuarioCadastro.cidade}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <b:inputText value="#{usuarioController.selection.cidade}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                    <h:outputText value="Telefone de Contato:"/>
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:inputText value="#{usuarioController.usuarioCadastro.contato}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <b:inputText value="#{usuarioController.selection.contato}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                    <c:if test="#{usuarioController.modalType eq 'create'}">
+                        <h:outputText value="Senha:"/>
+                        <b:inputSecret value="#{usuarioController.usuarioCadastro.senha}"/>
+                    </c:if>
+
+
+                    <c:if test="#{usuarioController.modalType eq 'create'}">
+                        <h:outputText value="Confirma:"/>
+                        <b:inputSecret value="#{confirma}"/>
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="#{usuarioController.modalType eq 'create'}">
+                            <b:commandButton value="Cadastrar" 
+                                             action="#{usuarioController.inserir(confirma)}" />
+                        </c:when>
+                        <c:otherwise>
+                            <b:commandButton value="Alterar" 
+                                             action="#{usuarioController.alterar()}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+
+                </b:panelGrid>
+
+            </b:modal>
+        </b:form>
+
+
+    </h:body>
+</html>
+

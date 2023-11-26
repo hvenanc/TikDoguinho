@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl id="gro" life="4000" sticky="false"/>
+        
+        <h:form id="formCadUsuario">
+            
+            <p:fieldset legend="Cadastro de Usuário">
+                
+                <h:panelGrid columns="3">
+                    <h:outputText value="login*:"/>
+                    <h:inputText id="txtLogin" value="#{usuarioController.usuarioCadastro.login}"
+                                 required="true" requiredMessage="O Campo login é obrigatório"/>
+                    <p:message for="txtLogin" />
+                    
+                    <h:outputText value="email*:"/>
+                    <p:inputText value="#{usuarioController.usuarioCadastro.email}"
+                                 id="txtEmail" required="true" requiredMessage="O campo email é obrigatório"/>
+                     <p:message for="txtEmail"/>
+                    
+                    <h:outputText value="cidade:"/>
+                    <p:inputText value="#{usuarioController.usuarioCadastro.cidade}"/>
+                    <h:outputText/>
+                    
+                    <h:outputText value="bairro:"/>
+                    <p:inputText value="#{usuarioController.usuarioCadastro.bairro}"/>
+                    <h:outputText/> 
+                    
+                    <h:outputText value="contato*:"/>
+                    <p:inputText value="#{usuarioController.usuarioCadastro.contato}"/>
+                    <h:outputText/>
+                    
+                    <h:outputText value="senha*:"/>
+                    <p:password value="#{usuarioController.usuarioCadastro.senha}"
+                                id="pswSenha" required="true" requiredMessage="O campo senha é obrigatório"/>
+                     <p:message for="pswSenha"/>
+                     
+                    <h:outputText value="Confirma Senha*:"
+                                  />
+                    <p:password id="pswConfirma" value="#{cSenha}" required="true" requiredMessage="O campo confirma senha é obrigatório"/>
+                    <p:message for="pswConfirma"/>
+                    
+                </h:panelGrid>
+                
+                <p:commandButton value="cadastrar" oncomplete="PF('widDialCadUsuario').show()"/> 
+                <h:commandButton value="cancelar"/>
+                
+            </p:fieldset>
+            
+            <p:dialog id="dialCadUsuario"  
+                      modal="true" visible="false" showEffect="fade" hideEffect="fade"
+                      widgetVar="widDialCadUsuario">
+                
+                <h:outputText value="Deseja realmente cadastrar o usuario?"/><br/>
+                <p:commandButton value="sim" action="#{usuarioController.inserir(cSenha)}"
+                                 oncomplete="PF('widDialCadUsuario').hide();"
+                                 update=":gro :formCadUsuario :msgs" />
+                <p:commandButton value="não" oncomplete="PF('widDialCadUsuario').hide()"/>
+                
+            </p:dialog>
+            
+        </h:form>
+        
+        <p:messages id="msgs"/>
+    </h:body>
+</html>
+

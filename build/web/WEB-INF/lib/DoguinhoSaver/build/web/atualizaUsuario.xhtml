@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formEditUsuario">
+            
+            <p:fieldset legend="Edição de Usuário">
+                
+                <h:panelGrid columns="3">
+                    <h:outputText value="login*:"/>
+                    <h:inputText id="txtLogin" value="#{usuarioController.selection.login}"
+                                 required="true" requiredMessage="O Campo login é obrigatório"/>
+                    <p:message for="txtLogin" />
+                    
+                    <h:outputText value="email*:"/>
+                    <p:inputText value="#{usuarioController.selection.email}"
+                                 id="txtEmail" required="true" requiredMessage="O campo email é obrigatório"/>
+                     <p:message for="txtEmail"/>
+                    
+                    <h:outputText value="cidade:"/>
+                    <p:inputText value="#{usuarioController.selection.cidade}"/>
+                    <h:outputText/>
+                    
+                    <h:outputText value="bairro:"/>
+                    <p:inputText value="#{usuarioController.selection.bairro}"/>
+                    <h:outputText/> 
+                    
+                    <h:outputText value="contato*:"/>
+                    <p:inputText value="#{usuarioController.selection.contato}"/>
+                    <h:outputText/>
+                    
+                </h:panelGrid>
+                
+                <p:commandButton value="editar" oncomplete="PF('widDialEditUsuario').show()"/> 
+                <h:commandButton value="cancelar"/>
+                
+            </p:fieldset>
+            
+            <p:dialog id="dialCadUsuario"  
+                      modal="true" visible="false" showEffect="fade" hideEffect="fade"
+                      widgetVar="widDialEditUsuario">
+                
+                <h:outputText value="Deseja realmente editar o usuario?"/><br/>
+                <p:commandButton value="sim" action="#{usuarioController.alterar()}"
+                                 oncomplete="PF('widDialCadUsuario').hide();"
+                                  />
+                <p:commandButton value="não" oncomplete="PF('widDialCadUsuario').hide()"/>
+                
+            </p:dialog>
+            
+        </h:form>
+    </h:body>
+</html>
+

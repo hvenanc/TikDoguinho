@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <c:if test="#{loginController.usuarioLogado ne null}">
+            <script>
+                location.href='indexUsuario.xhtml'
+            </script>
+        </c:if>
+        
+        <b:growl id="gro" show-summary="true" show-detail="true" delay="4000"/>
+        
+        <b:jumbotron>
+            <h3>Doguinho Saver System...</h3>
+            <h4>oueis seivin laifes</h4>
+        </b:jumbotron>
+        <p:dialog id="dialLogin" draggable="false" closable="false" 
+                  closeOnEscape="false" resizable="false" modal="false"
+                  visible="true">
+            <b:form>
+                <b:panelGrid columns="2">
+
+                    <h:outputText value="login:"/>
+                    <b:inputText value="#{login}"/>
+
+                    <h:outputText value="senha:"/>
+                    <b:inputSecret value="#{senha}"/>
+
+                </b:panelGrid>
+
+                <b:commandButton value="logar" look="primary" 
+                                 action="#{loginController.realizarLogin(login, senha)}"/><br/>
+                <h:outputText value="não é registrado?"/>
+                <b:button look="link" value="registre-se" onclick="$('.mRegistro').modal('show')"/>
+
+            </b:form>
+        </p:dialog>
+
+        <b:form id="formRegistro">
+            <b:modal id="modalRegistro" class="mRegistro">
+                <b:panelGrid columns="2">
+
+                    <h:outputText value="Login:"/>
+                    <b:inputText value="#{usuarioController.usuarioCadastro.login}"/>
+
+                    <h:outputText value="e-mail:"/>
+                    <b:inputText value="#{usuarioController.usuarioCadastro.email}"/>
+
+                    <h:outputText value="Bairro:"/>
+                    <b:inputText value="#{usuarioController.usuarioCadastro.bairro}"/>
+
+                    <h:outputText value="Cidade:"/>
+                    <b:inputText value="#{usuarioController.usuarioCadastro.cidade}"/>
+
+                    <h:outputText value="Telefone de Contato:"/>
+                    <b:inputText value="#{usuarioController.usuarioCadastro.contato}"/>
+
+                    <h:outputText value="Senha:"/>
+                    <b:inputSecret value="#{usuarioController.usuarioCadastro.senha}"/>
+
+                    <h:outputText value="Confirma:"/>
+                    <b:inputSecret value="#{confirma}"/>
+
+
+                    <b:commandButton value="Cadastrar" 
+                                     action="#{usuarioController.inserir(confirma)}" />
+
+                </b:panelGrid>
+            </b:modal>
+        </b:form>
+
+    </h:body>
+</html>
+

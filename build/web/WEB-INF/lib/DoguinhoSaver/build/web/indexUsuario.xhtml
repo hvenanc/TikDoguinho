@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menuUsuario.xhtml" />
+        <b:form id="formAlertaUsuario">
+            <b:panelGrid colSpans="4,4,4">
+
+                <c:forEach items="#{alertaController.readAlertas(loginController.usuarioLogado)}"
+                           var="alerta">
+
+                    <b:panel title="Alerta Inserido em: #{alerta.dataInsersaoFormated}"
+                             look="#{(alerta.acolhedor eq null)?'danger':'primary'}">
+
+                        <h:outputText value="Descrição do alerta: " class="h4"/><br/>
+                        <h:outputText value="#{alerta.descricaoInicial}"/><br/>
+                        <h:outputText value="Informações do Doguino: " class="h4"/><br/>
+                        <h:outputText value="#{alerta.doguinho.cor} - 
+                                      #{alerta.doguinho.identificacao} - #{alerta.doguinho.deficienciaAparente}"/>
+
+                        <br/>
+                        <b:commandButton value="detalhar alerta" oncomplete="$('.mDetail').modal('show')" ajax='true' update=':modalDetail'>
+                            <f:setPropertyActionListener value="#{alerta}" target="#{alertaController.selected}"/>
+                        </b:commandButton>
+                    </b:panel>
+
+                </c:forEach>
+
+            </b:panelGrid>
+        </b:form>
+
+        <b:modal id="modalDetail" class="mDetail">
+            <h5><h:outputText value="Informações do Doguinho - ESSA é página"/></h5>
+            <b:panel id="painelImagemResumo" >
+                <img src="LoadDogImage?codAlerta=#{alertaController.selected.codigo}"
+                     width="300px" height="300px"/>
+            </b:panel>
+            <b:panelGrid columns="2">
+                <h:outputText value="Cor"/>
+                <h:outputText value="#{alertaController.selected.doguinho.cor}"/>                        
+
+                <h:outputText value="Raça"/>
+                <h:outputText value="#{alertaController.selected.doguinho.raca}"/>                        
+
+                <h:outputText value="Porte"/>
+                <h:outputText value="#{alertaController.selected.doguinho.porte}"/> 
+
+                <h:outputText value="Situação"/>
+                <h:outputText value="#{alertaController.selected.doguinho.situacao}"/>                        
+
+                <h:outputText value="Sexo"/>
+                <h:outputText value="#{alertaController.selected.doguinho.sexo}"/>                        
+
+                <h:outputText value="Identificação"/>
+                <h:outputText value="#{alertaController.selected.doguinho.identificacao}"/>                        
+
+                <h:outputText value="Deficiência Aparente"/>
+                <h:outputText value="#{alertaController.selected.doguinho.deficienciaAparente}"/>                        
+
+            </b:panelGrid>
+            <b:panel>
+
+                <h5><h:outputText value="Informações do Alerta"/></h5>
+
+                <b:panelGrid columns="2">
+                    <h:outputText value="Descrição Inicial"/>
+                    <h:outputText value="#{alertaController.selected.descricaoInicial}"/>                        
+
+                    <h:outputText value="Local visto por último"/>
+                    <h:outputText value="#{alertaController.selected.localVistoPorUltimo}"/>                        
+                </b:panelGrid>
+                
+            </b:panel>
+        </b:modal>
+    </h:body>
+</html>
+

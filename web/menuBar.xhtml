@@ -65,7 +65,7 @@
                 <p:fileUpload fileUploadListener="#{tutorController.handleFileUpload}" mode="advanced"
                                   auto="true" sizeLimit="2000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" value="#{foto}"/>
                 
-                <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}"/>
+                <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}" look="success"/>
             </b:modal>
         </b:form>
         

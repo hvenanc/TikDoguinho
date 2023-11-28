@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -22,7 +23,8 @@
            <b:panelGrid columns="4">
                 <c:forEach items="#{petController.lerPets()}" var="pets">
                    
-                <b:commandButton oncomplete="$('.modalCadPet').modal()" ajax="true" update=":cadPet" style="border-radius: 75%">
+                    <b:commandButton style="border-radius: 75%" action="perfilPet">
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     <img src="ServletExibirImagemPets?codPet=#{pets.hashPet}"
                 width="150px" height="150px" style="border-radius: 50%"></img>
                 </b:commandButton>

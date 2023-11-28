@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,12 +12,20 @@
         
         <ui:include src="menuBar.xhtml" rendered="true"/>
         
-        <h4><h:outputText value="Perfil do #{petController.selection.nome}"/></h4>
+        <b:label value="Perfil do #{petController.selection.nome}" style="font-size: 20px"/>
+        
+        <b:panelGrid col-spans="4,8" style="text-align: center">
+            <b:panel>
+                <h3>Compartilhe seu Pet a partir de seu TikDogCode 🐾🐶🐱:</h3>
+                <h3><h:outputText value="#{petController.selection.hashPet}" style="font-size: 42px"/></h3>
+            </b:panel>
         
         <b:panel id="painelImagemResumo" >
             <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
                 width="150px" height="150px" style="border-radius: 50%; margin-left: 75%"></img>
         </b:panel>
+        </b:panelGrid>
+        
         
         <b:panel id="detDadosDoPet">
             

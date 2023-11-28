@@ -87,17 +87,6 @@ public class ManagerDao {
          tutor.setEmail("Henrique@teste.com");
          tutor.setLogin("Henrique");
          tutor.setSenha("123");
-         
-        Pet p = new Pet();
-        p.setMesAnoNascimento("00/0000");
-        p.setNome("Raul");
-        p.setPorte("peq");
-        
-        List<Pet> pets = new ArrayList<>();
-        pets.add(p);
-        tutor.setPets(pets);
-        
-        
         
         getCurrentInstance().insert(tutor);
         //getCurrentInstance().insert(p);

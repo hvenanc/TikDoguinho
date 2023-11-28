@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,6 +36,8 @@ public class Pet implements Serializable {
     private String hashPet;
     @ManyToMany(mappedBy = "pets", fetch = FetchType.EAGER)
     private List<Tutor> tutores;
+    @Embedded
+    private Arquivo arquivo;
 
     public int getCodigo() {
         return codigo;
@@ -82,6 +85,14 @@ public class Pet implements Serializable {
 
     public void setHashPet(String hashPet) {
         this.hashPet = hashPet;
+    }
+
+    public Arquivo getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(Arquivo arquivo) {
+        this.arquivo = arquivo;
     }
     
     public String hashPets() {

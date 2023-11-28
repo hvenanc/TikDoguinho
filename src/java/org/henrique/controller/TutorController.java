@@ -79,10 +79,14 @@ public class TutorController {
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
         
+        Arquivo arq = (Arquivo) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
+                 .getSession(true)).getAttribute("arquivo"));
+        
         pet.setNome(nome);
         pet.setPorte(porte);
         pet.setMesAnoNascimento(nascimento);
         pet.setHashPet(pet.hashPets());
+        pet.setArquivo(arq);
         List<Pet> petsTutor = tutorLogado.getPets();
         petsTutor.add(pet);
         tutorLogado.setPets(petsTutor);
@@ -91,7 +95,7 @@ public class TutorController {
         ManagerDao.getCurrentInstance().update(tutorLogado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pet Cadastrado com Sucesso!"));
         
-        return "gerenciarPets";
+        return "home";
         
         
     }

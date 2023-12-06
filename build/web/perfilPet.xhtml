@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -40,8 +41,16 @@
                 <h:outputText value="Porte:"/>
                 <h:outputText value="#{petController.selection.porte}"/>
                 
+                <h:outputText value="Meus Tutores:"/>
+                <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
                 
-                
+                <!-- 
+                <c:forEach items="#{petController.tutoresPets(petController.selection.hashPet)}" var="tutores">
+                    <h:outputText value="#{tutores}"/>
+                </c:forEach>
+                Funcionalidade Base para implementar uma visualização dos perfis entre usuários a partir de seus pets!
+                -->
+ 
             </b:panelGrid>
             
         </b:panel>

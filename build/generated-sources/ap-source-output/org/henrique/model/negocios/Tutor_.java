@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import org.henrique.model.negocios.Arquivo;
 import org.henrique.model.negocios.Pet;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-11-27T20:06:11")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-12-06T00:02:17")
 @StaticMetamodel(Tutor.class)
 public class Tutor_ { 
 

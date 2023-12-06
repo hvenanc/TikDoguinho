@@ -5,6 +5,7 @@
  */
 package org.henrique.controller;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -48,12 +49,17 @@ public class TutorController {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados atualizados com sucesso"));
     }
     
-    
-    public void alterarSenha(String senha, String novaSenha, String confimacao) {
-        
+    public Tutor recuperarTutorLogado() {
         Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
+        
+        return tutorLogado;
+    }
+    
+    public void alterarSenha(String senha, String novaSenha, String confimacao) {
+        
+        Tutor tutorLogado = recuperarTutorLogado();
         
         if(!tutorLogado.getSenha().equals(senha)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Senha Incorreta!"));
@@ -75,10 +81,9 @@ public class TutorController {
     public String cadastrarPet(String nome, String porte, String nascimento) {
         
         Pet pet = new Pet();
-        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true))
-                .getAttribute("loginController")).getTutorLogado();
-        
+        Tutor tutorLogado = recuperarTutorLogado();
+        List<Tutor> tutores = new ArrayList<>();
+        tutores.add(tutorLogado);
         Arquivo arq = (Arquivo) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
                  .getSession(true)).getAttribute("arquivo"));
         
@@ -86,6 +91,7 @@ public class TutorController {
         pet.setPorte(porte);
         pet.setMesAnoNascimento(nascimento);
         pet.setHashPet(pet.hashPets());
+        pet.setTutores(tutores);
         pet.setArquivo(arq);
         List<Pet> petsTutor = tutorLogado.getPets();
         petsTutor.add(pet);
@@ -105,9 +111,7 @@ public class TutorController {
         try {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" + codigoPet + "'", Pet.class).get(0);
         
-        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true))
-                .getAttribute("loginController")).getTutorLogado();
+        Tutor tutorLogado = recuperarTutorLogado();
         
          List<Pet> pets = tutorLogado.getPets();
          pets.add(pet);
@@ -139,10 +143,7 @@ public class TutorController {
     
     public List<Pet> lerPets() {
         
-        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true))
-                .getAttribute("loginController")).getTutorLogado();
-        
+        Tutor tutorLogado = recuperarTutorLogado();
         return tutorLogado.getPets();
         
     }
@@ -176,9 +177,7 @@ public class TutorController {
     
     public String fotoPerfilTutor() {
         
-        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(true))
-                .getAttribute("loginController")).getTutorLogado();
+        Tutor tutorLogado = recuperarTutorLogado();
         
         Arquivo arq = (Arquivo) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
                  .getSession(true)).getAttribute("arquivo"));

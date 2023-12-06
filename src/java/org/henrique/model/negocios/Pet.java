@@ -115,8 +115,8 @@ public class Pet implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.codigo;
+        int hash = 7;
+        hash = 13 * hash + Objects.hashCode(this.hashPet);
         return hash;
     }
 
@@ -132,12 +132,10 @@ public class Pet implements Serializable {
             return false;
         }
         final Pet other = (Pet) obj;
-        if (this.codigo != other.codigo) {
+        if (!Objects.equals(this.hashPet, other.hashPet)) {
             return false;
         }
         return true;
     }
-    
-    
     
 }

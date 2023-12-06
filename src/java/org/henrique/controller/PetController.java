@@ -7,6 +7,7 @@ package org.henrique.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -108,9 +109,7 @@ public class PetController {
          
          FacesContext.getCurrentInstance()
                  .addMessage(null, new FacesMessage("Imagem Carregada"));
-        
-        
-       // this.tagImagem = "http://localhost:8084/TikDoguinho/ServletExibirImagem";
+       
  
     }
     
@@ -138,6 +137,16 @@ public class PetController {
         }
         
         return "gerenciarPets";
+    }
+    
+    public List<String> tutoresPets(String codigoPet) {
+        
+        Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
+                + codigoPet + "'", Pet.class).get(0);
+        
+        List<Tutor> tutores = pet.getTutores();
+        return tutores.stream().map(Tutor::getLogin).
+                collect(Collectors.toList());
     }
     
 }

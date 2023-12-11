@@ -5,6 +5,7 @@
  */
 package org.henrique.model.negocios;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
@@ -13,7 +14,7 @@ import javax.persistence.Lob;
  * @author Henri
  */
 @Embeddable
-public class Arquivo {
+public class Arquivo implements Serializable {
     
     @Lob
     private byte [] arquivo;

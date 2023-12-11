@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -19,18 +18,35 @@
             </script>
         </c:if>
         
-       <b:form id="meusPets">
-           <b:panelGrid columns="4">
-                <c:forEach items="#{petController.lerPets()}" var="pets">
-                   
-                    <b:commandButton style="border-radius: 75%" action="perfilPet">
-                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
-                    <img src="ServletExibirImagemPets?codPet=#{pets.hashPet}"
-                width="150px" height="150px" style="border-radius: 50%"></img>
-                </b:commandButton>
+         <b:form id="publicacoesPerfil">    
+            <c:forEach items="#{publicacaoController.buscarTodasAsPublicacoes()}" var="posts">
                     
-                </c:forEach>
-            </b:panelGrid>
+                <b:panel style="text-align: center">
+                        <b:panel>
+                        <b:badge value="">
+                            <img src="ServletExibirImagemPets?codPet=#{posts.pet.hashPet}"
+                                 width="50px" height="50px" style="border-radius: 50%; margin-right: 10%"></img>
+                        </b:badge>
+                            <b:badge value="#{posts.pet.nome}"/>
+                    <b:panelGrid columns="2" style="align-items: center;">
+                        <b:video small-screen="two-thirds" 
+                                   src="ServletCarregarVideos?codVideo=#{posts.videos[0].codigo}"
+                                   style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
+                                   onplay="ajax:videoBean.onPlay()" 
+                                   onpause="ajax:videoBean.onPause()">
+                          </b:video>
+                        
+                        <b:video small-screen="two-thirds" 
+                                   src="ServletCarregarVideos?codVideo=#{posts.videos[1].codigo}"
+                                   style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
+                                   onplay="ajax:videoBean.onPlay()" 
+                                   onpause="ajax:videoBean.onPause()" >
+                        </b:video>
+                    </b:panelGrid>
+                        <h:outputText value="#{posts.descricao}" style="font-size: 30px"/>
+                    </b:panel>
+                    </b:panel>
+            </c:forEach>
         </b:form>
     </h:body>
 </html>

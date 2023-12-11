@@ -5,12 +5,10 @@
  */
 package org.henrique.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Tutor;
 
 /**
@@ -83,7 +81,7 @@ public class ManagerDao {
         
 
         
-        Tutor tutor = new Tutor();
+         Tutor tutor = new Tutor();
          tutor.setEmail("Henrique@teste.com");
          tutor.setLogin("Henrique");
          tutor.setSenha("123");

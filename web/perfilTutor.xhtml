@@ -55,6 +55,25 @@
                     <br></br>
                     <h:outputText value="E-mail: "/>
                     <h:outputText value="#{loginController.tutorLogado.email}"/>
+                    <br></br>
+                    <br></br>
+                    <h:outputText value="Meus Pets" style="font-size: 25pt"/>
+                    <br></br>
+                    <br></br>
+                    
+                    <b:form id="meusPets">
+           <b:panelGrid columns="4">
+                <c:forEach items="#{petController.lerPets()}" var="pets">
+                   
+                    <b:commandButton style="border-radius: 75%" action="perfilPet">
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    <img src="ServletExibirImagemPets?codPet=#{pets.hashPet}"
+                width="150px" height="150px" style="border-radius: 50%"></img>
+                </b:commandButton>
+                    
+                </c:forEach>
+            </b:panelGrid>
+        </b:form>
                     
                 </b:panel>
              </b:panelGrid>

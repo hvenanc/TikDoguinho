@@ -6,10 +6,8 @@
 package org.henrique.model.negocios;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,6 +37,8 @@ public class Pet implements Serializable {
     private List<Tutor> tutores;
     @Embedded
     private Arquivo arquivo;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Publicacao> publicacao;
 
     public int getCodigo() {
         return codigo;
@@ -94,7 +95,15 @@ public class Pet implements Serializable {
     public void setArquivo(Arquivo arquivo) {
         this.arquivo = arquivo;
     }
-    
+
+    public List<Publicacao> getPublicacao() {
+        return publicacao;
+    }
+
+    public void setPublicacao(List<Publicacao> publicacao) {
+        this.publicacao = publicacao;
+    }
+
     public String hashPets() {
         int qtdeMaximaCaracteres = 8;
         String[] caracteres = {"a", "1", "b", "2", "4", "5", "6", "7", "8",

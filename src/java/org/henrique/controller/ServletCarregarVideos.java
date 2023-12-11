@@ -6,42 +6,41 @@
 package org.henrique.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.henrique.model.dao.ManagerDao;
-import org.henrique.model.negocios.Pet;
+import org.henrique.model.negocios.Video;
 
 /**
  *
  * @author Henri
  */
-@WebServlet(name = "ServletExibirImagemPets", urlPatterns = {"/ServletExibirImagemPets"})
-public class ServletExibirImagemPets extends HttpServlet {
+@WebServlet(name = "ServletCarregarVideos", urlPatterns = {"/ServletCarregarVideos"})
+public class ServletCarregarVideos extends HttpServlet {
 
-
+  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String codigoPet = request.getParameter("codPet");
+        String codigoVideo = request.getParameter("codVideo");
         
-        Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
-                + codigoPet + "'", Pet.class).get(0);
+        Video video = (Video) ManagerDao.getCurrentInstance().read( "select v from Video v" + " where v.codigo = '" 
+                + codigoVideo + "'", Video.class).get(0);
         
-        System.out.println("Nome=" +  pet.getNome());
+        System.out.println(video.getNomeArquivo());
         
-        byte[] imagem = pet.getArquivo().getArquivo();
+        byte[] videoPublicacao = video.getArqVideo();
         
-        response.setContentType("image/jpg");
+        response.setContentType("video/mp4");
         
-        response.getOutputStream().write(imagem);
+        response.getOutputStream().write(videoPublicacao);
         
         response.getOutputStream().flush();
-
+      
     }
 
     /**

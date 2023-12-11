@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>TikDoguinho</title>
     </h:head>
@@ -21,15 +20,11 @@
         
         <b:navBar brand="TikDoguinho" brandHref="home.xhtml" fluid="true">
             <b:navbarLinks>
-                <b:dropMenu value=" Meus Pets  " icon="bi bi-person-hearts">
+                <b:dropMenu value=" Publicações  " icon="bi bi-person-hearts">
                         <b:form id="abrirCadTutor">
                             <div align="center" draggable="false" >
-                            <b:navLink value="Adicionar Pets"
-                                             oncomplete="$('.modalCadPet').modal()" ajax="true" update=":cadPet:modalCadPet"/>
-                            
-                            <b:navLink value="Compartilhar Pets"
-                                       oncomplete="$('.modalCompartilhar').modal()" ajax="true" update=":compartilharPet:modalCompartilhar"/>
-                            <b:navLink value="Gerenciar Pets" href="gerenciarPets.xhtml"></b:navLink>
+                            <b:navLink value="Criar Publicação"
+                                             oncomplete="$('.modalPublicacao').modal()" ajax="true" update=":cadPubl:modalPublicacao"/>
                             </div>
                         </b:form>
                 </b:dropMenu>
@@ -56,24 +51,18 @@
             </b:navbarLinks>
         </b:navBar>
         
-        <b:form id="cadPet" class="cadPet" enctype="multipart/form-data">
-            <b:modal id="modalCadPet" class="modalCadPet" title="Cadastre Aqui Seu Pet">
-                <b:inputText label="Nome do Pet: " labelStyle="width:100px" value="#{nome}"/>
-                <b:inputText label="Porte do Pet:" labelStyle="width:100px" value="#{porte}"/>
-                <b:inputText label="Nascimento:" labelStyle="width:100px" value="#{nascimento}"/>
+        <b:form id="cadPubl" class="cadPubl" enctype="multipart/form-data">
+            <b:modal id="modalPublicacao" class="modalPublicacao" title="Nova Publicação">
+                <b:inputText label="O que você e seu pet estão aprontando?" labelStyle="width:150px" value="#{descricao}"/>
                 
-                <p:fileUpload fileUploadListener="#{tutorController.handleFileUpload}" mode="advanced"
-                                  auto="true" sizeLimit="5000000" value="#{foto}"/>
+                <h6>Vídeo Pet</h6>
+                <p:fileUpload fileUploadListener="#{publicacaoController.videoPetUpload}" mode="advanced"
+                                  auto="true" sizeLimit="5000000" value="#{video1}"/>
+                <h6>Vídeo Tutor</h6>
+                <p:fileUpload fileUploadListener="#{publicacaoController.videoTutorUpload}" mode="advanced"
+                                  auto="true" sizeLimit="5000000" value="#{video2}"/>
                 
-                <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}" look="success"/>
-            </b:modal>
-        </b:form>
-        
-        <b:form id="compartilharPet" class="compartilharPet">
-            <b:modal id="modalCompartilhar" class="modalCompartilhar" title="Compartilhar Pet">
-                <p>Você poder cadastrar um Pet a partir do TikDogCode do Pet de alguém! 🐾🐶🐱</p>
-                <b:inputText label="Insira o Código:" labelStyle="width:120px" value="#{codigoPet}"/>
-                <b:commandButton value="Salvar Pet" action="#{tutorController.compartilharPet(codigoPet)}" look="success"/>
+                <b:commandButton value="Publicar" action="#{publicacaoController.inserirPublicacao(descricao, petController.selection.hashPet)}" look="success"/>
             </b:modal>
         </b:form>
         

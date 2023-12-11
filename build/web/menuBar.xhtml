@@ -63,7 +63,7 @@
                 <b:inputText label="Nascimento:" labelStyle="width:100px" value="#{nascimento}"/>
                 
                 <p:fileUpload fileUploadListener="#{tutorController.handleFileUpload}" mode="advanced"
-                                  auto="true" sizeLimit="2000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" value="#{foto}"/>
+                                  auto="true" sizeLimit="5000000" value="#{foto}"/>
                 
                 <b:commandButton value="Cadastrar Pet" action="#{tutorController.cadastrarPet(nome, porte, nascimento)}" look="success"/>
             </b:modal>

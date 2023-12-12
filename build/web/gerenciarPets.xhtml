@@ -49,16 +49,25 @@
                 
                 <b:panelGrid columns="2">
                     
-                    <h:outputText value="Meu TikDogCode"/>
-                    <h:outputText value="#{petController.selection.hashPet}"/>
+                    <b:panel id="painelImagemResumo" >
+                        <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
+                             width="150px" height="150px" style="border-radius: 50%;"></img>
+                    </b:panel>
                     
-                    <h:outputText value="Meu Nascimento"/>
-                    <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
-                                  
-                    <h:outputText value="Meu Porte"/>
-                    <h:outputText value="#{petController.selection.porte}"/>
-                    
-                </b:panelGrid>
+                    <b:panel>
+                        <h:outputText value="Meu TikDogCode "/>
+                        <h:outputText value="#{petController.selection.hashPet}"/>
+                        <br></br>
+                        <h:outputText value="Meu Nascimento: "/>
+                        <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
+                        <br></br>
+                        <h:outputText value="Meu Porte: "/>
+                        <h:outputText value="#{petController.selection.porte}"/>
+                        <br></br>
+                        <h:outputText value="Meus Tutores: "/>
+                        <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
+                    </b:panel>
+                </b:panelGrid> 
             </b:modal>
         </b:form>
         

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Tutor;
 
 /**
@@ -75,6 +76,16 @@ public class ManagerDao {
         em.remove(oDelete);
         em.getTransaction().commit();
         em.close();
+    }
+    
+    public List<Pet> findPetByLikeNome(String nome) {
+        
+        EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT p FROM Pet p WHERE p.nome like :nome";
+
+        return em.createQuery(jpql, Pet.class)
+                .setParameter("nome", "%" + nome + "%")
+                .getResultList();
     }
     
     public static void main(String[] args) {

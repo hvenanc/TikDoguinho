@@ -29,6 +29,7 @@ import org.primefaces.event.FileUploadEvent;
 public class PetController {
     
     private Pet selection;
+    private String buscaPet;
     
     @PostConstruct
     public void init() {
@@ -41,6 +42,14 @@ public class PetController {
 
     public void setSelection(Pet selection) {
         this.selection = selection;
+    }
+
+    public String getBuscaPet() {
+        return buscaPet;
+    }
+
+    public void setBuscaPet(String buscaPet) {
+        this.buscaPet = buscaPet;
     }
     
     public List<Pet> lerPets() {
@@ -147,6 +156,19 @@ public class PetController {
         List<Tutor> tutores = pet.getTutores();
         return tutores.stream().map(Tutor::getLogin).
                 collect(Collectors.toList());
+    }
+    
+    public List<Pet> buscarPets(String busca) {
+        
+        Tutor tutorLogado = ((LoginController) ((HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(true))
+                .getAttribute("loginController")).getTutorLogado();
+        
+        List<Pet> petsLocalizados =  ManagerDao.getCurrentInstance().findPetByLikeNome(busca);
+        List<Pet> petsTutorLogado =  tutorLogado.getPets();
+        petsLocalizados.removeAll(petsTutorLogado);
+        
+        return petsLocalizados;
     }
     
 }

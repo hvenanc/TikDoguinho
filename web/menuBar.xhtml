@@ -5,7 +5,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>TikDoguinho</title>
     </h:head>
@@ -34,12 +35,14 @@
                         </b:form>
                 </b:dropMenu>
             </b:navbarLinks>
-            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+            <b:form id="buscarNovosPets" class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar"/>
+                    <b:inputText class="form-control" placeholder="Pesquisar" value="#{busca}"/>
                 </div>
-                <a href="#" class="btn btn-success">Buscar no Feed</a>
-            </form>
+                <b:commandButton value="Encontrar Pets" look="success" action="seguirPets">
+                    <f:setPropertyActionListener value="#{busca}" target="#{petController.buscaPet}"/>
+                </b:commandButton>
+            </b:form>
             <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
             <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
             <b:navbarLinks pull="right" styleClass="hidden-xs">

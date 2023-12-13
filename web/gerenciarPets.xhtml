@@ -22,19 +22,37 @@
         
         
         <b:form id="formPets">
-            <b:dataTable  id="tablePets" value="#{petController.lerPets()}" var="pets" pdf="true">
-                <b:dataTableColumn value="#{pets.hashPet}" label="TikDogCode"/>
-                <b:dataTableColumn value="#{pets.nome}" label="Nome do Pet"/>
-                <b:dataTableColumn value="#{pets.mesAnoNascimento}" label="Mês e Ano de Nascimento"/>
-                <b:dataTableColumn value="#{pets.porte}" label="Porte"/>
-                <b:dataTableColumn label="Opções">
-                    <b:commandButton icon="search" ajax="true" 
-                                     oncomplete="$('.detalharPets').modal('show')"
-                                     update=":formPets:mostarPets"
-                                     >
-                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
-                    </b:commandButton>
-                    <b:commandButton icon="pencil" ajax="true"
+            <b:panelGrid columns="3">
+                <c:forEach items="#{petController.lerPets()}" var="pets">
+                    <b:panel title="#{pets.nome} 🐾🐶🐱" look="info">
+                        <b:panelGrid columns="2">
+
+                            <b:panel id="painelCardPet" >
+                                <img src="ServletExibirImagemPets?codPet=#{pets.hashPet}"
+                                     width="150px" height="150px" style="border-radius: 50%;"></img>
+                            </b:panel>
+
+                            <b:panel style="height: 180px;">
+                                <h:outputText value="Meu TikDogCode: "/>
+                                <h:outputText value="#{pets.hashPet}"/>
+                                <br></br>
+                                <h:outputText value="Meu Nascimento: "/>
+                                <h:outputText value="#{pets.mesAnoNascimento}"/>
+                                <br></br>
+                                <h:outputText value="Meu Porte: "/>
+                                <h:outputText value="#{pets.porte}"/>
+                                <br></br>
+                                <h:outputText value="Publicações: "/>
+                                <h:outputText value="#{pets.publicacao.size()}"/>
+                                <br></br>
+                                <h:outputText value="Seguidores: "/>
+                                <h:outputText value="#{pets.publicacao.size()}"/>
+                                <br></br>
+                                <h:outputText value="Seguindo: "/>
+                                <h:outputText value="#{pets.publicacao.size()}"/>
+                            </b:panel>
+                        </b:panelGrid> 
+                        <b:commandButton icon="pencil" ajax="true"
                                      oncomplete="$('.modalAtualizarPets').modal('show')"
                                      update=":formPets:atualizarPet">
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
@@ -42,30 +60,9 @@
                     <b:commandButton icon="trash" oncomplete="$('.modalDeletarPet').modal('show')" update=":formPets:deletarPet" >
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
-                </b:dataTableColumn>
-            </b:dataTable>
-            
-            <b:modal id="mostarPets" class="detalharPets" title="Perfil do #{petController.selection.nome} 🐾🐶🐱">
-                
-                <b:panelGrid columns="2">
-                    
-                    <b:panel id="painelImagemResumo" >
-                        <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
-                             width="150px" height="150px" style="border-radius: 50%;"></img>
                     </b:panel>
-                    
-                    <b:panel style="height: 180px;">
-                        <h:outputText value="Meu TikDogCode "/>
-                        <h:outputText value="#{petController.selection.hashPet}"/>
-                        <br></br>
-                        <h:outputText value="Meu Nascimento: "/>
-                        <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
-                        <br></br>
-                        <h:outputText value="Meu Porte: "/>
-                        <h:outputText value="#{petController.selection.porte}"/>
-                    </b:panel>
-                </b:panelGrid> 
-            </b:modal>
+                </c:forEach>
+            </b:panelGrid>
         </b:form>
         
         <b:form id="deletarPet" class="deletarPet">

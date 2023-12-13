@@ -62,16 +62,10 @@
         <b:form id="cadPet" class="cadPet" enctype="multipart/form-data">
             <b:modal id="modalCadPet" class="modalCadPet" title="Cadastre Aqui Seu Pet">
                 <b:inputText label="Nome do Pet: " labelStyle="width:100px" value="#{nome}"/>
-                <!--><b:inputText label="Porte do Pet:" labelStyle="width:100px" value="#{porte}"/><!-->
                 <b:selectOneMenu label="Porte do Pet:" labelStyle="width:100px" value="#{porte}">
                     <f:selectItem itemValue="Pequeno" itemLabel="Pequeno"/>
                     <f:selectItem itemValue="Medio" itemLabel="Médio"/>
                     <f:selectItem itemValue="Grande" itemLabel="Grande"/>
-                </b:selectOneMenu>
-                <b:selectOneMenu label="SEGUIR Pet:" labelStyle="width:100px" value="#{pet}">
-                    <c:forEach items="#{tutorController.lerPets()}" var="pets">
-                        <f:selectItem itemValue="#{pets.hashPet}" itemLabel="#{pets.nome}"/>
-                    </c:forEach>
                 </b:selectOneMenu>
                 <b:inputText label="Nascimento:" labelStyle="width:100px" value="#{nascimento}"/>
                 

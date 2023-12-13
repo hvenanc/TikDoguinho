@@ -34,6 +34,7 @@ public class PetController {
     @PostConstruct
     public void init() {
         this.selection = new Pet();
+        this.buscaPet = null;
     }
     
     public Pet getSelection() {
@@ -164,10 +165,10 @@ public class PetController {
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
         
-        List<Pet> petsLocalizados =  ManagerDao.getCurrentInstance().findPetByLikeNome(busca);
+        this.buscaPet = busca;
+        List<Pet> petsLocalizados =  ManagerDao.getCurrentInstance().findPetByLikeNome(this.buscaPet);
         List<Pet> petsTutorLogado =  tutorLogado.getPets();
         petsLocalizados.removeAll(petsTutorLogado);
-        
         return petsLocalizados;
     }
     

@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Meus Pets</title>
+        <title>TikDoguinho</title>
     </h:head>
     <h:body>
         
@@ -19,20 +19,24 @@
             </script>
         </c:if>
 
-        <b:form id="formPets">
-            <b:dataTable  id="tablePets" value="#{petController.buscarPets(busca)}" var="pets">
+        <b:form id="formPets2">
+            <b:dataTable  id="tablePets" value="#{petController.buscarPets(petController.buscaPet)}" var="pets">
                 <b:dataTableColumn value="#{pets.nome}" label="Nome do Pet"/>
                 <b:dataTableColumn value="#{pets.mesAnoNascimento}" label="Mês e Ano de Nascimento"/>
                 <b:dataTableColumn value="#{pets.porte}" label="Porte"/>
                 <b:dataTableColumn label="Opções">
-                    <b:commandButton icon="search" ajax="true" 
+                    <b:commandButton value="Preview Perfil" look="info" ajax="true" 
                                      oncomplete="$('.detalharPets').modal('show')"
-                                     update=":formPets:mostarPets"
+                                     update=":formPets2:mostarPets"
                                      >
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
-                    <b:commandButton value="Seguir" look="primary"
-                                     >
+                    <b:commandButton value="Ver Perfil" look="info" action="visualizarPet">
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    </b:commandButton>
+                    <b:commandButton value="Seguir" look="info" ajax="true"
+                                     oncomplete="$('.modalSeguirPet').modal('show')"
+                                     update=":formPets2:modalSeguirPet">
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
                 </b:dataTableColumn>
@@ -47,17 +51,35 @@
                              width="150px" height="150px" style="border-radius: 50%;"></img>
                     </b:panel>
                     
-                    <b:panel>
+                    <b:panel style="height: 180px;">
                         <h:outputText value="Meu Nascimento: "/>
                         <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
                         <br></br>
                         <h:outputText value="Meu Porte: "/>
                         <h:outputText value="#{petController.selection.porte}"/>
                         <br></br>
-                        <h:outputText value="Meus Tutores: "/>
-                        <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
+                        <h:outputText value="Publicações: "/>
+                        <h:outputText value="#{petController.selection.publicacao.size()}"/>
+                        <br></br>
+                        <h:outputText value="Seguidores: "/>
+                        <h:outputText value="#{petController.selection.publicacao.size()}"/>
+                        <br></br>
+                        <h:outputText value="Seguindo: "/>
+                        <h:outputText value="#{petController.selection.publicacao.size()}"/>
                     </b:panel>
                 </b:panelGrid> 
+            </b:modal>
+            
+            <b:modal id="modalSeguirPet" class="modalSeguirPet" title="Selecione o Pet que vai seguir esse Pet: #{petController.selection.nome}">
+
+                <b:form id="formSeguirPet" class="formSeguirPet">
+                    <b:selectOneMenu label="Selecione seu Pet:" labelStyle="width:125px" value="#{pet}">
+                        <c:forEach items="#{tutorController.lerPets()}" var="pets">
+                            <f:selectItem itemValue="#{pets.hashPet}" itemLabel="#{pets.nome}"/>
+                        </c:forEach>
+                    </b:selectOneMenu>
+                    <b:commandButton value="Seguir #{petController.selection.nome}" look="success"/>
+                </b:form>
             </b:modal>
         </b:form>
     </h:body>

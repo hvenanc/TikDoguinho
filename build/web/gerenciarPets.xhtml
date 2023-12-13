@@ -54,7 +54,7 @@
                              width="150px" height="150px" style="border-radius: 50%;"></img>
                     </b:panel>
                     
-                    <b:panel>
+                    <b:panel style="height: 180px;">
                         <h:outputText value="Meu TikDogCode "/>
                         <h:outputText value="#{petController.selection.hashPet}"/>
                         <br></br>
@@ -63,9 +63,6 @@
                         <br></br>
                         <h:outputText value="Meu Porte: "/>
                         <h:outputText value="#{petController.selection.porte}"/>
-                        <br></br>
-                        <h:outputText value="Meus Tutores: "/>
-                        <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
                     </b:panel>
                 </b:panelGrid> 
             </b:modal>

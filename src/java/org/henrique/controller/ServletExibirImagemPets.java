@@ -32,7 +32,7 @@ public class ServletExibirImagemPets extends HttpServlet {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
                 + codigoPet + "'", Pet.class).get(0);
         
-        System.out.println("Nome=" +  pet.getNome());
+        //System.out.println("Nome=" +  pet.getNome());
         
         byte[] imagem = pet.getArquivo().getArquivo();
         

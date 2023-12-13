@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>TikDoguinho</title>
     </h:head>
@@ -14,45 +15,35 @@
         
         <b:label value="Perfil do #{petController.selection.nome}" style="font-size: 20px"/>
         
-        <b:panelGrid col-spans="4,8" style="text-align: center">
-            <b:panel>
-                <h3>Compartilhe seu Pet a partir de seu TikDogCode 🐾🐶🐱:</h3>
-                <h3><h:outputText value="#{petController.selection.hashPet}" style="font-size: 42px"/></h3>
+        <b:panelGrid col-spans="4,8" style="text-align: center;">
+            <b:panel style="height: 180px;">
+                <h:outputText value="Publicações: "/>
+                <h:outputText value="#{petController.selection.publicacao.size()}"/>
+                <br></br>
+                <h:outputText value="Seguidores: "/>
+                <h:outputText value="#{petController.selection.publicacao.size()}"/>
+                <br></br>
+                <h:outputText value="Seguindo: "/>
+                <h:outputText value="#{petController.selection.publicacao.size()}"/>
+                <br></br>
+                <h:outputText value="Meus Tutores:"/>
+                <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
+                <br></br>
+                <!-->
+                <b:form id="seguirUmPet">
+                    <b:commandButton value="Seguir" look="primary">
+                        <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                    </b:commandButton>
+                </b:form>
+                <!-->
             </b:panel>
+                
         
         <b:panel id="painelImagemResumo" >
             <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
                 width="150px" height="150px" style="border-radius: 50%; margin-left: 75%"></img>
         </b:panel>
         </b:panelGrid>
-        
-        
-        <b:panel id="detDadosDoPet">
-            
-            <b:panelGrid columns="2" style="text-align: center">
-                
-                <h:outputText value="Nome do Pet:"/>
-                <h:outputText value="#{petController.selection.nome}"/>
-                
-                <h:outputText value="Nascimento:"/>
-                <h:outputText value="#{petController.selection.mesAnoNascimento}"/>
-                              
-                <h:outputText value="Porte:"/>
-                <h:outputText value="#{petController.selection.porte}"/>
-                
-                <h:outputText value="Meus Tutores:"/>
-                <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
-                
-                <!-- 
-                <c:forEach items="#{petController.tutoresPets(petController.selection.hashPet)}" var="tutores">
-                    <h:outputText value="#{tutores}"/>
-                </c:forEach>
-                Funcionalidade Base para implementar uma visualização dos perfis entre usuários a partir de seus pets!
-                -->
- 
-            </b:panelGrid>
-            
-        </b:panel>
         
         <b:form id="publicacoesPerfil">    
             <c:forEach items="#{publicacaoController.buscarPublicacoesPorPet(petController.selection.hashPet)}" var="posts">

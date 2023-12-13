@@ -31,7 +31,7 @@ public class ServletCarregarVideos extends HttpServlet {
         Video video = (Video) ManagerDao.getCurrentInstance().read( "select v from Video v" + " where v.codigo = '" 
                 + codigoVideo + "'", Video.class).get(0);
         
-        System.out.println(video.getNomeArquivo());
+        //System.out.println(video.getNomeArquivo());
         
         byte[] videoPublicacao = video.getArqVideo();
         

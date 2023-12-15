@@ -7,6 +7,7 @@ package org.henrique.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -108,6 +109,7 @@ public class PublicacaoController {
                 + codigoPet + "'", Pet.class).get(0);
  
         Publicacao publicacao = new Publicacao();
+        publicacao.setDataAtual(new Date());
         publicacao.setPet(pet);
         publicacao.setDescricao(descricao);
         publicacao.setHashPub(publicacao.hashPublicacao());
@@ -127,7 +129,7 @@ public class PublicacaoController {
         
         publicacao.setVideos(videos);
         
-        List<Publicacao> posts = new ArrayList<>();
+        List<Publicacao> posts = pet.getPublicacao();
         posts.add(publicacao);
         
         pet.setPublicacao(posts);

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
 import org.henrique.model.negocios.Arquivo;
 import org.henrique.model.negocios.Pet;
+import org.henrique.model.negocios.Seguidor;
 import org.henrique.model.negocios.Tutor;
 import org.primefaces.event.FileUploadEvent;
 
@@ -30,11 +31,13 @@ public class PetController {
     
     private Pet selection;
     private String buscaPet;
+    private Seguidor seguidor;
     
     @PostConstruct
     public void init() {
         this.selection = new Pet();
         this.buscaPet = null;
+        this.seguidor = new Seguidor();
     }
     
     public Pet getSelection() {
@@ -170,6 +173,31 @@ public class PetController {
         List<Pet> petsTutorLogado =  tutorLogado.getPets();
         petsLocalizados.removeAll(petsTutorLogado);
         return petsLocalizados;
+    }
+    
+    public void seguirPet(String hashPetSeguido, String hashPetSeguir) {
+        
+        Pet petSeguido = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
+                + hashPetSeguido + "'", Pet.class).get(0);
+        //Scooby
+        
+        
+        Pet petSeguir = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
+                + hashPetSeguir + "'", Pet.class).get(0);
+        
+        List<Seguidor> seguidores = petSeguido.getSeguidores();
+        
+        this.seguidor.setPet(petSeguido);
+        this.seguidor.setSeguidor(petSeguir);
+        seguidores.add(seguidor);
+        
+        petSeguido.setSeguidores(seguidores);
+        ManagerDao.getCurrentInstance().update(petSeguido);
+        
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso! Agora " + 
+                petSeguir.getNome() + " está seguindo " + petSeguido.getNome(), ""));
+        
+        
     }
     
 }

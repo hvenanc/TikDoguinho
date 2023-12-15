@@ -90,8 +90,6 @@ public class ManagerDao {
     
     public static void main(String[] args) {
         
-
-        
          Tutor tutor = new Tutor();
          tutor.setEmail("Henrique@teste.com");
          tutor.setLogin("Henrique");

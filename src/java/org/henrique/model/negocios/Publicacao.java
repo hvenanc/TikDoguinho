@@ -7,6 +7,7 @@ package org.henrique.model.negocios;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -19,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -33,7 +36,8 @@ public class Publicacao implements Serializable {
     private int id;
     private String descricao;
     private String hashPub;
-    private LocalDateTime dataPublicacao;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAtual;
     @ManyToOne()
     @JoinColumn(name = "pets_codigo", referencedColumnName = "codigo")
     private Pet pet;
@@ -64,12 +68,12 @@ public class Publicacao implements Serializable {
         this.hashPub = hashPub;
     }
 
-    public LocalDateTime getDataPublicacao() {
-        return dataPublicacao;
+    public Date getDataAtual() {
+        return dataAtual;
     }
 
-    public void setDataPublicacao(LocalDateTime dataPublicacao) {
-        this.dataPublicacao = dataPublicacao;
+    public void setDataAtual(Date dataAtual) {
+        this.dataAtual = dataAtual;
     }
 
     public Pet getPet() {

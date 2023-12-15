@@ -41,10 +41,9 @@
                                 <h:outputText value="#{pets.publicacao.size()}"/>
                                 <br></br>
                                 <h:outputText value="Seguidores: "/>
-                                <h:outputText value="#{pets.publicacao.size()}"/>
+                                <h:outputText value="#{pets.seguidores.size()}"/>
                                 <br></br>
-                                <h:outputText value="Seguindo: "/>
-                                <h:outputText value="#{pets.publicacao.size()}"/>
+                                
                             </b:panel>
                         </b:panelGrid> 
                         <b:commandButton value="Ver Perfil" look="info" action="visualizarPet">
@@ -59,18 +58,17 @@
                 </c:forEach>
             </b:panelGrid>
             
-            <b:modal id="modalSeguirPet" class="modalSeguirPet" title="Selecione o Pet que vai seguir esse Pet: #{petController.selection.nome}">
-
-                <b:form id="formSeguirPet" class="formSeguirPet">
-                    <b:selectOneMenu label="Selecione seu Pet:" labelStyle="width:125px" value="#{pet}">
+                <b:modal id="modalSeguirPet" class="modalSeguirPet" title="Selecione o Pet que vai seguir esse Pet: #{petController.selection.nome}">
+                    <b:selectOneMenu label="Selecione seu Pet:" labelStyle="width:125px" value="#{pet}" ajax="true">
                         <c:forEach items="#{tutorController.lerPets()}" var="pets">
-                            <f:selectItem itemValue="#{pets.hashPet}" itemLabel="#{pets.nome}"/>
+                            <f:selectItem itemLabel="#{pets.nome}" itemValue="#{pets.hashPet}"/>
                         </c:forEach>
                     </b:selectOneMenu>
-                    <b:commandButton value="Seguir #{petController.selection.nome}" look="success"/>
-                </b:form>
-            </b:modal>
+                    <h:outputText value="#{pet}"/>
+                    <b:commandButton value="Seguir #{petController.selection.nome}" look="success" 
+                                 action="#{petController.seguirPet(petController.selection.hashPet, pet)}"/>
+                </b:modal>
+           
         </b:form>
     </h:body>
 </html>
-

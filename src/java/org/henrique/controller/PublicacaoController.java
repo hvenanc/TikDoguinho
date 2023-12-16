@@ -6,7 +6,9 @@
 package org.henrique.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -141,7 +143,9 @@ public class PublicacaoController {
     
     public List<Publicacao> buscarTodasAsPublicacoes() {
       
-        return ManagerDao.getCurrentInstance().read("select p from Publicacao p", Publicacao.class);
+        List<Publicacao> publicacoes = ManagerDao.getCurrentInstance().read("select p from Publicacao p", Publicacao.class);
+        Collections.reverse(publicacoes);
+        return publicacoes;
         
     }
     
@@ -150,9 +154,17 @@ public class PublicacaoController {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
                 + codigoPet + "'", Pet.class).get(0);
         
-        System.out.println(pet.getPublicacao());
+        Collections.reverse(pet.getPublicacao());
         return pet.getPublicacao();
         
+    }
+    
+    public String formatarData(Date data) {
+        
+        String data1 = new SimpleDateFormat("dd/MM/yyyy").format(data);
+        String hora = new SimpleDateFormat("HH:mm:ss").format(data);
+        
+        return data1 + " " + hora;
     }
     
 }

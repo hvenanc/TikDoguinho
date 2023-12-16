@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>TikDoguinho</title>
     </h:head>
@@ -22,9 +21,6 @@
                 <br></br>
                 <h:outputText value="Seguidores: "/>
                 <h:outputText value="#{petController.selection.seguidores.size()}"/>
-                <br></br>
-                <h:outputText value="Seguindo: "/>
-                <h:outputText value="#{petController.selection.seguindo.size()}"/>
                 <br></br>
                 <h:outputText value="Meus Tutores:"/>
                 <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>
@@ -50,26 +46,38 @@
                     
                 <b:panel style="text-align: center">
                         <b:panel>
-                        <b:badge value="">
-                            <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
+                        <table style="margin:0px auto;">
+                            <th style="width: 100px;">
+                                 <img src="ServletExibirImagemPets?codPet=#{petController.selection.hashPet}"
                                  width="50px" height="50px" style="border-radius: 50%; margin-right: 10%"></img>
-                        </b:badge>
-                        <b:badge value="#{petController.selection.nome}"/>
-                    <b:panelGrid columns="2" style="align-items: center;">
-                        <b:video small-screen="two-thirds" 
-                                   src="ServletCarregarVideos?codVideo=#{posts.videos[0].codigo}"
-                                   style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
-                                   onplay="ajax:videoBean.onPlay()" 
-                                   onpause="ajax:videoBean.onPause()">
-                          </b:video>
+                            </th>
+                            <th style="width: 100px;">
+                                <b:badge value="#{petController.selection.nome}"/>
+                            </th>
+                            <th style="width: 150px;">
+                                <h:outputText value="#{publicacaoController.formatarData(posts.dataAtual)}"/>
+                            </th>
+                        </table>
                         
-                        <b:video small-screen="two-thirds" 
-                                   src="ServletCarregarVideos?codVideo=#{posts.videos[1].codigo}"
-                                   style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
-                                   onplay="ajax:videoBean.onPlay()" 
-                                   onpause="ajax:videoBean.onPause()" >
-                        </b:video>
-                    </b:panelGrid>
+                        <table style="margin:0px auto;">
+                            <th>
+                                <b:video small-screen="two-thirds" 
+                                         src="ServletCarregarVideos?codVideo=#{posts.videos[0].codigo}"
+                                         style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
+                                         onplay="ajax:videoBean.onPlay()" 
+                                         onpause="ajax:videoBean.onPause()">
+                                </b:video>
+                            </th>
+
+                            <th>
+                                <b:video small-screen="two-thirds" 
+                                         src="ServletCarregarVideos?codVideo=#{posts.videos[1].codigo}"
+                                         style="width:400px; height: 400px; margin-top: 10%; margin-bottom: 10%" tooltip-position="center"
+                                         onplay="ajax:videoBean.onPlay()" 
+                                         onpause="ajax:videoBean.onPause()" >
+                                </b:video>
+                            </th>
+                        </table>
                         <h:outputText value="#{posts.descricao}" style="font-size: 30px"/>
                     </b:panel>
                     </b:panel>

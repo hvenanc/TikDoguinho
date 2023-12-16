@@ -59,6 +59,13 @@
                     <b:commandButton icon="trash" oncomplete="$('.modalDeletarPet').modal('show')" update=":formPets:deletarPet" >
                         <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
                     </b:commandButton>
+                        <b:commandButton icon="edit" oncomplete="$('.modalPublicacao').modal()" 
+                                         ajax="true" update=":cadPubl:modalPublicacao">
+                            <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                        </b:commandButton>
+                        <b:commandButton icon="user" action="perfilPet">
+                            <f:setPropertyActionListener value="#{pets}" target="#{petController.selection}"/>
+                        </b:commandButton>
                     </b:panel>
                 </c:forEach>
             </b:panelGrid>
@@ -79,9 +86,12 @@
                 
                     <b:inputText label="Nome:" labelStyle="width:8s0px" 
                                  value="#{petController.selection.nome}"/>
-                    
-                     <b:inputText label="Porte:" labelStyle="width:8s0px" 
-                                 value="#{petController.selection.porte}"/>
+                     
+                     <b:selectOneMenu label="Porte do Pet:" labelStyle="width:100px" value="#{petController.selection.porte}">
+                         <f:selectItem itemValue="Pequeno" itemLabel="Pequeno"/>
+                         <f:selectItem itemValue="Medio" itemLabel="Médio"/>
+                         <f:selectItem itemValue="Grande" itemLabel="Grande"/>
+                     </b:selectOneMenu>
                     
                     <b:inputText label="Nascimento:" labelStyle="width:8s0px" 
                                  value="#{petController.selection.mesAnoNascimento}"/>
@@ -91,6 +101,21 @@
                      
                     <b:commandButton value="Atualizar Pet" action="#{petController.atualizarPet(codigoPet)}" 
                                      look="success"/>
+            </b:modal>
+        </b:form>
+        
+        <b:form id="cadPubl" class="cadPubl" enctype="multipart/form-data">
+            <b:modal id="modalPublicacao" class="modalPublicacao" title="Nova Publicação">
+                <b:inputText label="O que você e seu pet estão aprontando?" labelStyle="width:150px" value="#{descricao}"/>
+                
+                <h6>Vídeo Pet</h6>
+                <p:fileUpload fileUploadListener="#{publicacaoController.videoPetUpload}" mode="advanced"
+                                  auto="true" sizeLimit="5000000" value="#{video1}"/>
+                <h6>Vídeo Tutor</h6>
+                <p:fileUpload fileUploadListener="#{publicacaoController.videoTutorUpload}" mode="advanced"
+                                  auto="true" sizeLimit="5000000" value="#{video2}"/>
+                
+                <b:commandButton value="Publicar" action="#{publicacaoController.inserirPublicacao(descricao, petController.selection.hashPet)}" look="success"/>
             </b:modal>
         </b:form>
         

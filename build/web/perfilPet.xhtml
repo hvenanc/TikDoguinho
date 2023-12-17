@@ -39,6 +39,15 @@
                               
                 <h:outputText value="Porte:"/>
                 <h:outputText value="#{petController.selection.porte}"/>
+              
+                <h:outputText value="Publicações: "/>
+                <h:outputText value="#{petController.selection.publicacao.size()}"/>
+
+                <h:outputText value="Seguidores: "/>
+                <h:outputText value="#{petController.selection.seguidores.size()}"/>
+
+                <h:outputText value="Seguindo: "/>
+                <h:outputText value="#{petController.selection.seguidos.size()}"/>
                 
                 <h:outputText value="Meus Tutores:"/>
                 <h:outputText value="#{petController.tutoresPets(petController.selection.hashPet)}"/>

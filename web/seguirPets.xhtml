@@ -43,6 +43,8 @@
                                 <h:outputText value="Seguidores: "/>
                                 <h:outputText value="#{pets.seguidores.size()}"/>
                                 <br></br>
+                                <h:outputText value="Seguindo: "/>
+                                <h:outputText value="#{pets.seguidos.size()}"/>
                                 
                             </b:panel>
                         </b:panelGrid> 
@@ -64,7 +66,6 @@
                             <f:selectItem itemLabel="#{pets.nome}" itemValue="#{pets.hashPet}"/>
                         </c:forEach>
                     </b:selectOneMenu>
-                    <h:outputText value="#{pet}"/>
                     <b:commandButton value="Seguir #{petController.selection.nome}" look="success" 
                                  action="#{petController.seguirPet(petController.selection.hashPet, pet)}"/>
                 </b:modal>

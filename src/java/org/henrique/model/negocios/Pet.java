@@ -8,15 +8,12 @@ package org.henrique.model.negocios;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,6 +41,8 @@ public class Pet implements Serializable {
     private List<Publicacao> publicacao;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Seguidor> seguidores;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Seguindo> seguidos;
     
 
     public int getCodigo() {
@@ -116,6 +115,14 @@ public class Pet implements Serializable {
 
     public void setSeguidores(List<Seguidor> seguidores) {
         this.seguidores = seguidores;
+    }
+
+    public List<Seguindo> getSeguidos() {
+        return seguidos;
+    }
+
+    public void setSeguidos(List<Seguindo> seguidos) {
+        this.seguidos = seguidos;
     }
 
     public String hashPets() {

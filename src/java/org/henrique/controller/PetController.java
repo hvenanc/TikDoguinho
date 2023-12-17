@@ -18,6 +18,7 @@ import org.henrique.model.dao.ManagerDao;
 import org.henrique.model.negocios.Arquivo;
 import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Seguidor;
+import org.henrique.model.negocios.Seguindo;
 import org.henrique.model.negocios.Tutor;
 import org.primefaces.event.FileUploadEvent;
 
@@ -32,12 +33,15 @@ public class PetController {
     private Pet selection;
     private String buscaPet;
     private Seguidor seguidor;
+    private Seguindo seguindo;
     
     @PostConstruct
     public void init() {
         this.selection = new Pet();
         this.buscaPet = null;
         this.seguidor = new Seguidor();
+        this.seguindo = new Seguindo();
+  
     }
     
     public Pet getSelection() {
@@ -193,6 +197,15 @@ public class PetController {
         
         petSeguido.setSeguidores(seguidores);
         ManagerDao.getCurrentInstance().update(petSeguido);
+        
+        List<Seguindo> petsQueSigo = petSeguir.getSeguidos();
+        
+        this.seguindo.setPet(petSeguir);
+        this.seguindo.setSeguindo(petSeguido);
+        petsQueSigo.add(seguindo);
+        
+        petSeguir.setSeguidos(petsQueSigo);
+        ManagerDao.getCurrentInstance().update(petSeguir);
         
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso! Agora " + 
                 petSeguir.getNome() + " está seguindo " + petSeguido.getNome(), ""));

@@ -18,16 +18,17 @@ import javax.persistence.Table;
  *
  * @author Henri
  */
+
 @Entity
-@Table(name = "seguidor")
-public class Seguidor implements Serializable {
+@Table(name = "seguindo")
+public class Seguindo implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "seguidor_id")
-    private Pet seguidor;
+    @JoinColumn(name = "seguindo_id")
+    private Pet seguindo;
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
@@ -40,12 +41,12 @@ public class Seguidor implements Serializable {
         this.id = id;
     }
 
-    public Pet getSeguidor() {
-        return seguidor;
+    public Pet getSeguindo() {
+        return seguindo;
     }
 
-    public void setSeguidor(Pet seguidor) {
-        this.seguidor = seguidor;
+    public void setSeguindo(Pet seguindo) {
+        this.seguindo = seguindo;
     }
 
     public Pet getPet() {
@@ -55,5 +56,7 @@ public class Seguidor implements Serializable {
     public void setPet(Pet pet) {
         this.pet = pet;
     }
- 
+    
+    
+    
 }

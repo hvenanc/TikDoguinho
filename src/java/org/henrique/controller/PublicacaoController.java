@@ -18,9 +18,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.henrique.model.dao.ManagerDao;
-import org.henrique.model.negocios.Arquivo;
 import org.henrique.model.negocios.Pet;
 import org.henrique.model.negocios.Publicacao;
+import org.henrique.model.negocios.Seguindo;
 import org.henrique.model.negocios.Video;
 import org.primefaces.event.FileUploadEvent;
 
@@ -34,11 +34,13 @@ public class PublicacaoController {
     
     private Publicacao publicacaoSelection;
     private Publicacao cadastroPublicacao;
+    private String codPet;
     
     @PostConstruct
     public void init() {
         this.publicacaoSelection = new Publicacao();
         this.cadastroPublicacao = new Publicacao();
+        this.codPet = null;
     }
 
     public Publicacao getPublicacaoSelection() {
@@ -56,7 +58,14 @@ public class PublicacaoController {
     public void setCadastroPublicacao(Publicacao cadastroPublicacao) {
         this.cadastroPublicacao = cadastroPublicacao;
     }
-    
+
+    public String getCodPet() {
+        return codPet;
+    }
+
+    public void setCodPet(String codPet) {
+        this.codPet = codPet;
+    }
     
     
     public void videoTutorUpload(FileUploadEvent event) throws IOException {
@@ -166,5 +175,30 @@ public class PublicacaoController {
         
         return data1 + " " + hora;
     }
+    
+    public List<Publicacao> publicacoesPorPetSeguido(String codigoPet) {
+        
+        this.codPet = codigoPet;
+        List<Pet> consultaPet =  ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
+                + codigoPet + "'", Pet.class);
+        
+        if(consultaPet.isEmpty()) {
+            return null;
+        }
+        
+        Pet pet = consultaPet.get(0);
+        List<Seguindo> pets = pet.getSeguidos();
+        List<Publicacao> posts = new ArrayList<>();
+        
+        for(Seguindo publicacoes: pets) {
+            posts.addAll(publicacoes.getSeguindo().getPublicacao());
+        }
+        
+        posts.sort((p1,p2) -> Integer.compare(p1.getId(), p2.getId()) * -1);
+        return posts;
+        
+    }
+    
+    
     
 }

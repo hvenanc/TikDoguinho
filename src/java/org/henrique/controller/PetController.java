@@ -181,11 +181,11 @@ public class PetController {
     
     public void seguirPet(String hashPetSeguido, String hashPetSeguir) {
         
+        try {
+        
         Pet petSeguido = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
                 + hashPetSeguido + "'", Pet.class).get(0);
-        //Scooby
-        
-        
+     
         Pet petSeguir = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
                 + hashPetSeguir + "'", Pet.class).get(0);
         
@@ -209,6 +209,13 @@ public class PetController {
         
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso! Agora " + 
                 petSeguir.getNome() + " está seguindo " + petSeguido.getNome(), ""));
+         
+        }
+        
+        catch(ArrayIndexOutOfBoundsException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Você Precisa ter um Pet Cadastrado no TikDoguinho!", ""));
+        }
         
         
     }

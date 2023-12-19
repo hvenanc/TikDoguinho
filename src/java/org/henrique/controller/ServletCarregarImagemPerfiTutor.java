@@ -30,8 +30,6 @@ public class ServletCarregarImagemPerfiTutor extends HttpServlet {
                 .getExternalContext().getSession(true))
                 .getAttribute("loginController")).getTutorLogado();
         
-        
-        
         byte[] imagem = tutorLogado.getArquivo().getArquivo();
         
         response.setContentType("image/jpeg");

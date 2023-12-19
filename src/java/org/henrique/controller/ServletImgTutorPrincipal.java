@@ -19,8 +19,8 @@ import org.henrique.model.negocios.Pet;
  *
  * @author Henri
  */
-@WebServlet(name = "ServletExibirImagem", urlPatterns = {"/ServletExibirImagem"})
-public class ServletExibirImagem extends HttpServlet {
+@WebServlet(name = "ServletImgTutorPrincipal", urlPatterns = {"/ServletImgTutorPrincipal"})
+public class ServletImgTutorPrincipal extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +31,7 @@ public class ServletExibirImagem extends HttpServlet {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" 
                 + codigoPet + "'", Pet.class).get(0);
         
-        byte[] imagem = pet.getTutores().get(1).getArquivo().getArquivo();
+        byte[] imagem = pet.getTutores().get(0).getArquivo().getArquivo();
         
         response.setContentType("image/jpg");
         

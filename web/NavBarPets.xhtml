@@ -60,10 +60,10 @@
                 
                 <h6>Vídeo Pet</h6>
                 <p:fileUpload fileUploadListener="#{publicacaoController.videoPetUpload}" mode="advanced"
-                                  auto="true" sizeLimit="5000000" value="#{video1}"/>
+                                  auto="true" sizeLimit="10000000" value="#{video1}"/>
                 <h6>Vídeo Tutor</h6>
                 <p:fileUpload fileUploadListener="#{publicacaoController.videoTutorUpload}" mode="advanced"
-                                  auto="true" sizeLimit="5000000" value="#{video2}"/>
+                                  auto="true" sizeLimit="10000000" value="#{video2}"/>
                 
                 <b:commandButton value="Publicar" action="#{publicacaoController.inserirPublicacao(descricao, petController.selection.hashPet)}" look="success"/>
             </b:modal>

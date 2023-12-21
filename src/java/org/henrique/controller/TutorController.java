@@ -30,10 +30,12 @@ public class TutorController {
     private Tutor tutorCadastro;
     private Tutor selection;
     private String tagImagem;
+    private Pet petCadastro;
     
     @PostConstruct
     public void init() {
         this.tutorCadastro = new Tutor();
+        this.petCadastro = new Pet();
     }
     
     public void inserir() {
@@ -78,31 +80,21 @@ public class TutorController {
     }
     
     
-    public String cadastrarPet(String nome, String porte, String nascimento) {
+    public String cadastrarPet() {
         
-        Pet pet = new Pet();
         Tutor tutorLogado = recuperarTutorLogado();
-        List<Tutor> tutores = new ArrayList<>();
-        tutores.add(tutorLogado);
         Arquivo arq = (Arquivo) (((HttpSession)FacesContext.getCurrentInstance().getExternalContext()
                  .getSession(true)).getAttribute("arquivo"));
-        
-        pet.setNome(nome);
-        pet.setPorte(porte);
-        pet.setMesAnoNascimento(nascimento);
-        pet.setHashPet(pet.hashPets());
-        pet.setTutores(tutores);
-        pet.setArquivo(arq);
-        List<Pet> petsTutor = tutorLogado.getPets();
-        petsTutor.add(pet);
-        tutorLogado.setPets(petsTutor);
-        
-        
+        this.petCadastro.setHashPet(this.petCadastro.hashPets());
+        this.petCadastro.setArquivo(arq);
+        this.petCadastro.addTutor(tutorLogado);
+        ManagerDao.getCurrentInstance().insert(this.petCadastro);   
+        tutorLogado.addPet(this.petCadastro);
+        this.petCadastro = new Pet();
         ManagerDao.getCurrentInstance().update(tutorLogado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pet Cadastrado com Sucesso!"));
         
-        return "home";
-        
+        return "gerenciarPets";
         
     }
     
@@ -111,13 +103,17 @@ public class TutorController {
         try {
         Pet pet = (Pet) ManagerDao.getCurrentInstance().read( "select p from Pet p" + " where p.hashPet = '" + codigoPet + "'", Pet.class).get(0);
         
-        Tutor tutorLogado = recuperarTutorLogado();
-        
+         List<Tutor> tutoresPet = pet.getTutores();
+         if(tutoresPet.size() == 2) {
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Esse Pet já possui 2 Tutores",""));
+         }
+         else {
+             
+         Tutor tutorLogado = recuperarTutorLogado();
+
          List<Pet> pets = tutorLogado.getPets();
          pets.add(pet);
          tutorLogado.setPets(pets);
-         
-         List<Tutor> tutoresPet = pet.getTutores();
          tutoresPet.add(tutorLogado);
          pet.setTutores(tutoresPet);
          
@@ -125,6 +121,7 @@ public class TutorController {
          ManagerDao.getCurrentInstance().update(tutorLogado);
          ManagerDao.getCurrentInstance().update(pet);
          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Que massa! Agora você tem um Pet Compartilhado"));
+         }
         }
         catch(Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Código de Pet Inesixtente ou Pet já compartilhado",""));
@@ -214,5 +211,15 @@ public class TutorController {
     public void setTagImagem(String tagImagem) {
         this.tagImagem = tagImagem;
     }
+
+    public Pet getPetCadastro() {
+        return petCadastro;
+    }
+
+    public void setPetCadastro(Pet petCadastro) {
+        this.petCadastro = petCadastro;
+    }
+    
+    
 
 }

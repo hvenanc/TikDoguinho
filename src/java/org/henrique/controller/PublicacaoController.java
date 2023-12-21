@@ -147,7 +147,7 @@ public class PublicacaoController {
         ManagerDao.getCurrentInstance().update(pet);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Post Inserido com Sucesso!"));
         
-        return "home";
+        return "perfilPet";
     }
     
     public List<Publicacao> buscarTodasAsPublicacoes() {

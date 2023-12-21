@@ -6,6 +6,7 @@
 package org.henrique.model.negocios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -33,13 +34,17 @@ public class Tutor implements Serializable {
     private String login;
     private String email;
     private String senha;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tutor_pets",
             joinColumns = @JoinColumn(name = "tutor_id"),
             inverseJoinColumns = @JoinColumn(name = "pets_id"))
     private List<Pet> pets;
     @Embedded
     private Arquivo arquivo;
+
+    public Tutor() {
+        this.pets = new ArrayList<>();
+    }
 
     public int getCodigo() {
         return codigo;
@@ -79,6 +84,10 @@ public class Tutor implements Serializable {
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
+    }
+    
+    public void addPet(Pet pet) {
+        pets.add(pet);
     }
 
     @Override
